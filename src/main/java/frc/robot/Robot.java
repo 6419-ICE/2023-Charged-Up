@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.HandleConeFlipper;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,7 +25,7 @@ import frc.robot.Constants.OIConstants;
  * project.
  */
 public class Robot extends TimedRobot {
-  private WPI_VictorSPX ConeFlipper; //= new VictorSPX(10);
+  
   private Command m_autonomousCommand;
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   private RobotContainer m_robotContainer;
@@ -37,7 +39,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    ConeFlipper = new WPI_VictorSPX(10);
+    
   }
 
   /**
@@ -91,26 +93,18 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+   
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    if (m_driverController.getAButtonPressed()) {
-        ConeFlipper.set(VictorSPXControlMode.PercentOutput, -0.5);
-  } else if (m_driverController.getAButtonReleased()) {
-    ConeFlipper.set(VictorSPXControlMode.Position, 0);
-  } 
-  if (m_driverController.getBButtonPressed()) {
-    ConeFlipper.set(VictorSPXControlMode.PercentOutput, 0.5);
-} else if (m_driverController.getBButtonReleased()) {
-ConeFlipper.set(VictorSPXControlMode.Position, 0);
+   
 
-} 
-  
   }
   @Override
   public void testInit() {

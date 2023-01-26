@@ -14,11 +14,14 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.HandleConeFlipper;
+import frc.robot.subsystems.ConeFlipper;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -33,19 +36,24 @@ import java.util.List;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-
+  private final ConeFlipper m_ConeFlipper = new ConeFlipper();
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-
+  static Joystick mechanismJoystick = new Joystick(Constants.ButtonBoxID);
+  static JoystickButton coneFlipperUpButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ConeFlipperUp);
+  static JoystickButton coneFlipperDownButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ConeFlipperDown);
+  private HandleConeFlipper handleConeFlipper = new HandleConeFlipper(m_ConeFlipper);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
+    
     configureButtonBindings();
-
+    m_ConeFlipper.setDefaultCommand(handleConeFlipper);
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
@@ -77,8 +85,15 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+            coneFlipperUpButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ConeFlipperUp);
+            coneFlipperDownButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ConeFlipperDown);
   }
-
+  public static boolean GetConeFlipperUpButton() {
+    return mechanismJoystick.getRawButton(Constants.GamePadConstants.ConeFlipperUp);
+  }
+  public static boolean GetConeFlipperDownButton() {
+    return mechanismJoystick.getRawButton(Constants.GamePadConstants.ConeFlipperDown);
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -136,6 +151,6 @@ public class RobotContainer {
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
   }
 
-
+  
 }
 
