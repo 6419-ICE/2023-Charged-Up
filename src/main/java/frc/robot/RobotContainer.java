@@ -84,14 +84,20 @@ public class RobotContainer {
   public static boolean GetConeFlipperDownButton() {
     return mechanismJoystick.getRawButton(Constants.GamePadConstants.ConeFlipperDown);
   }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5c6f4ba38533fdcaf52097dbb888f1404de9009f
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return  autoChooser.getSelected();
   }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5c6f4ba38533fdcaf52097dbb888f1404de9009f
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
