@@ -1,7 +1,6 @@
 package frc.robot;
 import java.util.List;
 
-import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -29,7 +28,7 @@ public class TrajectoryPaths {
     // Start Putting new Autonomus Trajectories aqui(here), use this entry as an example. 
     public static Trajectory trajectoryExample () {
 
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
     // Start at the origin facing the +X direction
     new Pose2d(0, 0, new Rotation2d(0)),
     // Pass through these two interior waypoints, making an 's' curve path
@@ -38,19 +37,19 @@ public class TrajectoryPaths {
     new Pose2d(3, 0, new Rotation2d(0)),
     config);
 
-    return exampleTrajectory; 
+    return trajectory; 
     }
 
     public static Trajectory trajectoryAutoDriveOutOfCommunity () {
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+        List.of(new Translation2d(0,0)),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
+        new Pose2d(1, 0, new Rotation2d(0)),
         config);
 
-        return exampleTrajectory; 
+        return trajectory; 
     }
 }
