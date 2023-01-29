@@ -5,29 +5,19 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HandleConeFlipper;
 import frc.robot.subsystems.ConeFlipper;
+import frc.robot.commands.AutoDriveOutOfCommunity;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import java.util.List;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -49,9 +39,13 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+  private static SendableChooser<Command> autoChooser;
   public RobotContainer() {
     // Configure the button bindings
-    
+    autoChooser = new SendableChooser<>();
+    autoChooser.setDefaultOption("None", null);
+    autoChooser.addOption("Auto Drive Out Of Community", new AutoDriveOutOfCommunity(m_robotDrive));
+    SmartDashboard.putData("Autonomous", autoChooser);
     configureButtonBindings();
     m_ConeFlipper.setDefaultCommand(handleConeFlipper);
     // Configure default commands
@@ -59,16 +53,12 @@ public class RobotContainer {
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
-           
             () -> m_robotDrive.drive(
-            
                 MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.06),
                 MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.06),
                 MathUtil.applyDeadband(-m_driverController.getRightX(), 0.06),
                 true),
-            m_robotDrive
-            
-            )); 
+            m_robotDrive));
   }
 
   /**
@@ -94,11 +84,20 @@ public class RobotContainer {
   public static boolean GetConeFlipperDownButton() {
     return mechanismJoystick.getRawButton(Constants.GamePadConstants.ConeFlipperDown);
   }
+
+
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    return  autoChooser.getSelected();
+  }
+
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
+  /* 
   public Command getAutonomousCommand() {
     // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(
@@ -106,27 +105,16 @@ public class RobotContainer {
         AutoConstants.kMaxAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(DriveConstants.kDriveKinematics);
-           // m_robotDrive.drive(0.5, 0.5, 0, true);
-             //waits 10 seconds then stops the motors
-    //   try {
-    //     wait(3000);
-    //   } catch (InterruptedException e) {
-    //     // TODO Auto-generated catch block
-    //     e.printStackTrace();
-    //   }
-      m_robotDrive.drive(0, 0, 0, true);
-      
-    //An example trajectory to follow. All units in meters.
-  
+
+    // An example trajectory to follow. All units in meters.
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
-        // (ignore) Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(Units.feetToMeters(5), 0), new Translation2d(Units.feetToMeters(10), 0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(Units.feetToMeters(15), 0, new Rotation2d(0)),
+        new Pose2d(3, 0, new Rotation2d(0)),
         config);
-    //return null;
 
     var thetaController = new ProfiledPIDController(
         AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
@@ -145,12 +133,10 @@ public class RobotContainer {
         m_robotDrive);
 
     // Reset odometry to the starting pose of the trajectory.
-    //m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
+    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
   }
-
-  
+  */
 }
-
