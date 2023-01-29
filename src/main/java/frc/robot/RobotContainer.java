@@ -18,12 +18,15 @@ import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AutoDriveOutOfCommunity;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -41,8 +44,13 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
+  private static SendableChooser<Command> autoChooser;
   public RobotContainer() {
     // Configure the button bindings
+    autoChooser = new SendableChooser<>();
+    autoChooser.setDefaultOption("None", null);
+    autoChooser.addOption("Two Ball Auto", new AutoDriveOutOfCommunity(m_robotDrive));
+    SmartDashboard.putData("Autonomous", autoChooser);
     configureButtonBindings();
 
     // Configure default commands
@@ -74,11 +82,19 @@ public class RobotContainer {
             m_robotDrive));
   }
 
+
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    return  autoChooser.getSelected();
+  }
+
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
+  /* 
   public Command getAutonomousCommand() {
     // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(
@@ -119,4 +135,5 @@ public class RobotContainer {
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
   }
+  */
 }
