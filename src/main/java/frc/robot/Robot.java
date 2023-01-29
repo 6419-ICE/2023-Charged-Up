@@ -3,10 +3,17 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+<<<<<<< HEAD
+
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+=======
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+>>>>>>> 5c6f4ba38533fdcaf52097dbb888f1404de9009f
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -15,7 +22,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+<<<<<<< HEAD
+=======
 
+>>>>>>> 5c6f4ba38533fdcaf52097dbb888f1404de9009f
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -29,7 +39,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+<<<<<<< HEAD
+=======
 
+>>>>>>> 5c6f4ba38533fdcaf52097dbb888f1404de9009f
   }
 
   /**
@@ -83,18 +96,19 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-   
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {}
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 5c6f4ba38533fdcaf52097dbb888f1404de9009f
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
