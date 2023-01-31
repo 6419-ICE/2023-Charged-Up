@@ -8,10 +8,12 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HandleConeFlipper;
 import frc.robot.subsystems.ConeFlipper;
 import frc.robot.commands.AutoDriveOutOfCommunity;
+import frc.robot.commands.AutoPickForTwoCubes;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -45,7 +47,10 @@ public class RobotContainer {
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("None", null);
     autoChooser.addOption("Auto Drive Out Of Community", new AutoDriveOutOfCommunity(m_robotDrive));
+    autoChooser.addOption("Auto Two Cubes", new AutoPickForTwoCubes(m_robotDrive));
     SmartDashboard.putData("Autonomous", autoChooser);
+    //Shuffleboard.getTab("Gryo tab").add(m_robotDrive.m_gyro);
+
     configureButtonBindings();
     m_ConeFlipper.setDefaultCommand(handleConeFlipper);
     // Configure default commands

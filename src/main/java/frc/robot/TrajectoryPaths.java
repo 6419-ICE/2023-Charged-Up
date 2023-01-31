@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 
 
 public class TrajectoryPaths {
@@ -52,4 +53,33 @@ public class TrajectoryPaths {
 
         return trajectory; 
     }
+
+    // These sets of trajectories are being used to Create the Two Cube Autonomus Program
+    public static Trajectory trajectoryAutoForwardTowardsSecondBlock () {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d(1,0)),
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(Units.inchesToMeters(224), 0, Rotation2d.fromDegrees(179.4)),
+            config);
+    
+            return trajectory; 
+        }
+    
+
+    public static Trajectory trajectoryAutoBackTowardsDropOffOfSecondBlock () {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d(1,0)),
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(Units.inchesToMeters(224), 0, Rotation2d.fromDegrees(179.4)),
+            config);
+    
+            return trajectory; 
+        }
+    
 }
