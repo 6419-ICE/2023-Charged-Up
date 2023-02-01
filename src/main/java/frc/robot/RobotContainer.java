@@ -12,6 +12,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HandleConeFlipper;
 import frc.robot.subsystems.ConeFlipper;
 import frc.robot.commands.AutoDriveOutOfCommunity;
+import frc.robot.commands.AutoEngageOnChargingStation;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -45,6 +46,7 @@ public class RobotContainer {
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("None", null);
     autoChooser.addOption("Auto Drive Out Of Community", new AutoDriveOutOfCommunity(m_robotDrive));
+    autoChooser.addOption("Auto Engage On Charging Station Center", new AutoEngageOnChargingStation(m_robotDrive));
     SmartDashboard.putData("Autonomous", autoChooser);
     configureButtonBindings();
     m_ConeFlipper.setDefaultCommand(handleConeFlipper);
