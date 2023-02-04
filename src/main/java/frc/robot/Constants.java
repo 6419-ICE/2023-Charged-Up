@@ -49,6 +49,9 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDss
+    public static final int GrabberID = 12;
+    public static final int ArmID = 13;
+
     public static final int kFrontLeftDrivingCanId = 2;
     public static final int kRearLeftDrivingCanId = 4;
     public static final int kFrontRightDrivingCanId = 8;
@@ -140,5 +143,7 @@ public final class Constants {
   public static final class GamePadConstants {
 public static final int ConeFlipperUp = 1;
 public static final int ConeFlipperDown = 2;
+public static final int GrabberOpen = 3;
+public static final int GrabberClose = 4;
   }
 }

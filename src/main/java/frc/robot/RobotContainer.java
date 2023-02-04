@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HandleConeFlipper;
+import frc.robot.commands.handleGrabber;
 import frc.robot.subsystems.ConeFlipper;
 import frc.robot.commands.AutoDriveOutOfCommunity;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Grabber;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -30,12 +32,16 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ConeFlipper m_ConeFlipper = new ConeFlipper();
+  private final Grabber m_Grabber = new Grabber();
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   static Joystick mechanismJoystick = new Joystick(Constants.ButtonBoxID);
   static JoystickButton coneFlipperUpButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ConeFlipperUp);
   static JoystickButton coneFlipperDownButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ConeFlipperDown);
+  static JoystickButton GrabberOpenButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.GrabberOpen);
+  static JoystickButton GrabberCloseButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.GrabberClose);
   private HandleConeFlipper handleConeFlipper = new HandleConeFlipper(m_ConeFlipper);
+  private handleGrabber handleGrabber = new handleGrabber(m_Grabber);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -48,6 +54,7 @@ public class RobotContainer {
     SmartDashboard.putData("Autonomous", autoChooser);
     configureButtonBindings();
     m_ConeFlipper.setDefaultCommand(handleConeFlipper);
+    m_Grabber.setDefaultCommand(handleGrabber);
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
@@ -84,6 +91,14 @@ public class RobotContainer {
   public static boolean GetConeFlipperDownButton() {
     return mechanismJoystick.getRawButton(Constants.GamePadConstants.ConeFlipperDown);
   }
+ public static boolean GetGrabberCloseButton() {
+  return mechanismJoystick.getRawButton(Constants.GamePadConstants.GrabberClose);
+  
+ } 
+ public static boolean GetGrabberOpenButton() {
+  return mechanismJoystick.getRawButton(Constants.GamePadConstants.GrabberOpen);
+  
+ } 
 
 
   public Command getAutonomousCommand() {
