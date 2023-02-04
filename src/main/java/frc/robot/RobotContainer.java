@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
@@ -36,6 +37,7 @@ public class RobotContainer {
   static JoystickButton coneFlipperUpButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ConeFlipperUp);
   static JoystickButton coneFlipperDownButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ConeFlipperDown);
   private HandleConeFlipper handleConeFlipper = new HandleConeFlipper(m_ConeFlipper);
+  private static DutyCycleEncoder FlipperEncoder = new DutyCycleEncoder(Constants.FlipperEncoderID);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -84,7 +86,10 @@ public class RobotContainer {
   public static boolean GetConeFlipperDownButton() {
     return mechanismJoystick.getRawButton(Constants.GamePadConstants.ConeFlipperDown);
   }
-
+  
+  public static DutyCycleEncoder GetFlipperEncoder() {
+return FlipperEncoder;
+  }
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
