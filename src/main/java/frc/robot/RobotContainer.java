@@ -43,6 +43,7 @@ public class RobotContainer {
   static JoystickButton GrabberCloseButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.GrabberClose);
   private HandleConeFlipper handleConeFlipper = new HandleConeFlipper(m_ConeFlipper);
   private handleGrabber handleGrabber = new handleGrabber(m_Grabber);
+  private static DutyCycleEncoder coneFlipperEncoder = new DutyCycleEncoder(Constants.FlipperEncoderID);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -98,14 +99,18 @@ public class RobotContainer {
  } 
  public static boolean GetGrabberOpenButton() {
   return mechanismJoystick.getRawButton(Constants.GamePadConstants.GrabberOpen);
-  
  } 
+ public static DutyCycleEncoder GetFlipperEncoder() {
+  return coneFlipperEncoder;
+}
 
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return  autoChooser.getSelected();
   }
+
+  
 
 
   /**
