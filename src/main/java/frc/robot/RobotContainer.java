@@ -42,11 +42,7 @@ public class RobotContainer {
   static JoystickButton GrabberOpenButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.GrabberOpen);
   static JoystickButton GrabberCloseButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.GrabberClose);
   private HandleConeFlipper handleConeFlipper = new HandleConeFlipper(m_ConeFlipper);
-<<<<<<< HEAD
-  private static DutyCycleEncoder FlipperEncoder = new DutyCycleEncoder(Constants.FlipperEncoderID);
-=======
   private handleGrabber handleGrabber = new handleGrabber(m_Grabber);
->>>>>>> jackbranch2
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -96,12 +92,6 @@ public class RobotContainer {
   public static boolean GetConeFlipperDownButton() {
     return mechanismJoystick.getRawButton(Constants.GamePadConstants.ConeFlipperDown);
   }
-<<<<<<< HEAD
-  
-  public static DutyCycleEncoder GetFlipperEncoder() {
-return FlipperEncoder;
-  }
-=======
  public static boolean GetGrabberCloseButton() {
   return mechanismJoystick.getRawButton(Constants.GamePadConstants.GrabberClose);
   
@@ -111,7 +101,6 @@ return FlipperEncoder;
   
  } 
 
->>>>>>> jackbranch2
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
