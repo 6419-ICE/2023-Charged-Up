@@ -43,7 +43,7 @@ public class HandleConeFlipper extends CommandBase{
         } else {
             pos = true;
         }
-        System.out.println(testHall.get() + " POS: " + pos);
+       // System.out.println(testHall.get() + " POS: " + pos);
         if (RobotContainer.GetConeFlipperUpButton()) {
             up = true; //coneFlipper.MoveUp();
            // System.out.print( new BigDecimal(RobotContainer.GetFlipperPos()).setScale(3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString() + "-");

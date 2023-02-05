@@ -4,11 +4,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Grabber;
 
-public class handleGrabber extends CommandBase{
+public class HandleGrabber extends CommandBase{
     Grabber m_grabber;
-    public handleGrabber() {
+    boolean Open = false;
+    boolean Close = false;
+    public HandleGrabber() {
     }
-    public handleGrabber(Grabber grabber) {
+    public HandleGrabber(Grabber grabber) {
         m_grabber = grabber;
         addRequirements(m_grabber);
     }
@@ -16,18 +18,43 @@ public class handleGrabber extends CommandBase{
     public void execute() {
         // TODO Auto-generated method stub
         if (RobotContainer.GetGrabberCloseButton()) {
-            m_grabber.CloseGrabber();
+       Close = true;
         } else if (RobotContainer.GetGrabberOpenButton()) {
-            m_grabber.OpenGrabber();
-        } else {
+        Open = true;
+        } 
+        // } else {
+        //     m_grabber.StopMotor();
+        // }
+        //close
+        if (Close) {
+        if (m_grabber.GetEncoderPos() <= 0) {
             m_grabber.StopMotor();
+            Close = false;
+        } else {
+            m_grabber.CloseGrabber();
         }
-        super.execute();
     }
+        //open 
+         else if (Open) {
+            if (m_grabber.GetEncoderPos() >=75) {
+                m_grabber.StopMotor();
+                Open = false;
+            } else {
+                m_grabber.OpenGrabber();
+
+            }
+    }
+       
+    
+        super.execute();
+}
+
     @Override
     public void initialize() {
+        
         // TODO Auto-generated method stub
         super.initialize();
     }
     
+
 }

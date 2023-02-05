@@ -13,14 +13,22 @@ public class Grabber extends SubsystemBase {
     private static final double MaxSpeed = 0.05;
     private static final double MinSpeed = -0.05;
     public Grabber() {
+        
     }
     public void OpenGrabber() {
         GrabberMotor.set(TalonFXControlMode.PercentOutput,MaxSpeed);
+        System.out.println(GrabberMotor.getSelectedSensorPosition() / Constants.ClawUnitsPerDegree);
     }
     public void CloseGrabber() {
         GrabberMotor.set(TalonFXControlMode.PercentOutput,MinSpeed);
+        System.out.println(GrabberMotor.getSelectedSensorPosition() / Constants.ClawUnitsPerDegree);
+    }
+    public double GetEncoderPos() {
+        return GrabberMotor.getSelectedSensorPosition() / 768;
     }
     public void StopMotor() {
         GrabberMotor.set(ControlMode.PercentOutput, 0);
+        System.out.println(GrabberMotor.getSelectedSensorPosition() / Constants.ClawUnitsPerDegree);
+        
     }
 }
