@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.ConeFlipper;
@@ -38,6 +39,7 @@ public class HandleConeFlipper extends CommandBase{
 //Loops while command is running 
     @Override
     public void execute() {
+        System.out.println(RobotContainer.GetFlipperEncoder().getAbsolutePosition());
         if (testHall.get()) {
             pos = false;
         } else {
@@ -66,12 +68,12 @@ public class HandleConeFlipper extends CommandBase{
     //     coneFlipper.StopMotor();
     //   }
       if (up) {
-        System.out.println(testHall.get() + " POS (in up): " + pos);
-        if (RobotContainer.GetFlipperEncoder().get() >= 0) {
+        System.out.println(RobotContainer.GetFlipperEncoder().getAbsolutePosition());
+        if (RobotContainer.GetFlipperEncoder().getAbsolutePosition() >= Constants.upValue) {
             // RobotContainer.GetFlipperEncoder().reset();
             coneFlipper.StopMotor();
             up = false;
-            System.out.println("pos = true");
+            System.out.println(" Stopped");
         // if (!(RobotContainer.GetFlipperEncoder().getDistance() < 0)) {
             
         //     System.out.println(RobotContainer.GetFlipperEncoder().getDistance() + "- It Stopped :)");
@@ -106,12 +108,13 @@ public class HandleConeFlipper extends CommandBase{
             
     //     }
     // } else {
-       if (!(RobotContainer.GetFlipperEncoder().getDistance() > -0.275)) {
+       if (RobotContainer.GetFlipperEncoder().getAbsolutePosition() <= Constants.downValue) {
             System.out.println("- It Stopped :)");
             down = false;
-            System.out.println(RobotContainer.GetFlipperEncoder().getDistance());
+            System.out.println(RobotContainer.GetFlipperEncoder().getAbsolutePosition());
+            coneFlipper.StopMotor();
         } else {
-            System.out.println(RobotContainer.GetFlipperEncoder().getDistance() + "- It Stopped :)");
+            System.out.println(RobotContainer.GetFlipperEncoder().getAbsolutePosition() + "- It Stopped :)");
             coneFlipper.MoveDown();
             
         }
@@ -121,6 +124,7 @@ public class HandleConeFlipper extends CommandBase{
     }
       if (RobotContainer.GetConeFlipperDownButton() && RobotContainer.GetConeFlipperUpButton()) {
         coneFlipper.MoveUp();
+        
       }
     
         // TODO Auto-generated method stub 
@@ -130,8 +134,8 @@ public class HandleConeFlipper extends CommandBase{
     @Override
     public void initialize() {
        
-       
-        RobotContainer.GetFlipperEncoder().reset();
+        //RobotContainer.GetFlipperEncoder().reset();
+        //RobotContainer.GetFlipperEncoder().reset();
         testingVar = false;
         // TODO Auto-generated method stub
         super.initialize();

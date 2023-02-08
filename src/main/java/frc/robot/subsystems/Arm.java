@@ -15,17 +15,17 @@ public class Arm extends SubsystemBase {
     }
     public void MoveUp() {
         ArmMotor.set(ControlMode.PercentOutput, MinValue);
-        System.out.println(ArmMotor.getSelectedSensorPosition());
+       // System.out.println(ArmMotor.getSelectedSensorPosition());
     }
     public void MoveDown() {
         ArmMotor.set(ControlMode.PercentOutput, MaxValue);
-        System.out.println(ArmMotor.getSelectedSensorPosition());
+       // System.out.println(ArmMotor.getSelectedSensorPosition());
     }
     public double GetEncoderPos() {
         return ArmMotor.getSelectedSensorPosition();
     }
      public void StopMotor() {
-        System.out.println(ArmMotor.getSelectedSensorPosition());
+      //  System.out.println(ArmMotor.getSelectedSensorPosition());
         ArmMotor.set(ControlMode.PercentOutput, 0);
     }
 }

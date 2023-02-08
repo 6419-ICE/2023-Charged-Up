@@ -4,13 +4,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Grabber;
 
-public class HandleGrabber extends CommandBase{
+public class handleGrabber extends CommandBase{
     Grabber m_grabber;
     boolean Open = false;
     boolean Close = false;
-    public HandleGrabber() {
+    public handleGrabber() {
     }
-    public HandleGrabber(Grabber grabber) {
+    public handleGrabber(Grabber grabber) {
         m_grabber = grabber;
         addRequirements(m_grabber);
     }

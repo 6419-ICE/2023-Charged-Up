@@ -24,6 +24,9 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static final double upValue = 0.415;
+  public static final double downValue = 0.15;
+
   public static final int ButtonBoxID = 1;
   public static final int FlipperEncoderID = 9;
   public static final int ClawUnitsPerDegree = 768;
