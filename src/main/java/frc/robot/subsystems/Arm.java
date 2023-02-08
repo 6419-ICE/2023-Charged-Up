@@ -20,7 +20,11 @@ public class Arm extends SubsystemBase {
     public void MoveDown() {
         ArmMotor.set(ControlMode.PercentOutput, MaxValue);
         System.out.println(ArmMotor.getSelectedSensorPosition());
-    } public void StopMotor() {
+    }
+    public double GetEncoderPos() {
+        return ArmMotor.getSelectedSensorPosition();
+    }
+     public void StopMotor() {
         System.out.println(ArmMotor.getSelectedSensorPosition());
         ArmMotor.set(ControlMode.PercentOutput, 0);
     }

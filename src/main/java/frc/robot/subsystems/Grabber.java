@@ -13,7 +13,7 @@ public class Grabber extends SubsystemBase {
     private static final double MaxSpeed = 0.05;
     private static final double MinSpeed = -0.05;
     public Grabber() {
-        
+       
     }
     public void OpenGrabber() {
         GrabberMotor.set(TalonFXControlMode.PercentOutput,MaxSpeed);

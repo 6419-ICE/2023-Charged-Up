@@ -67,8 +67,8 @@ public class HandleConeFlipper extends CommandBase{
     //   }
       if (up) {
         System.out.println(testHall.get() + " POS (in up): " + pos);
-        if (pos) {
-            RobotContainer.GetFlipperEncoder().reset();
+        if (RobotContainer.GetFlipperEncoder().get() >= 0) {
+            // RobotContainer.GetFlipperEncoder().reset();
             coneFlipper.StopMotor();
             up = false;
             System.out.println("pos = true");
@@ -81,7 +81,7 @@ public class HandleConeFlipper extends CommandBase{
         //     System.out.print(RobotContainer.GetFlipperEncoder().getDistance());
             
         // }
-    } else if (!pos) {
+    } else {
         System.out.println("pos = false");
         // if (!(RobotContainer.GetFlipperEncoder().getDistance() < 0.275)) {
             
