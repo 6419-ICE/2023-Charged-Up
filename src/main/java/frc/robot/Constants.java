@@ -25,6 +25,8 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
   public static final int ButtonBoxID = 1;
+  public static final int FlipperEncoderID = 9;
+  public static final int ClawUnitsPerDegree = 768;
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
@@ -34,7 +36,7 @@ public final class Constants {
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(20.75);
     // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(32.5);
+    public static final double kWheelBase = Units.inchesToMeters(31.5);
     // Distance between front and back wheels on robot
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -49,6 +51,9 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDss
+    public static final int GrabberID = 12;
+    public static final int ArmID = 11;
+
     public static final int kFrontLeftDrivingCanId = 2;
     public static final int kRearLeftDrivingCanId = 4;
     public static final int kFrontRightDrivingCanId = 8;
@@ -140,5 +145,10 @@ public final class Constants {
   public static final class GamePadConstants {
 public static final int ConeFlipperUp = 1;
 public static final int ConeFlipperDown = 2;
+public static final int GrabberOpen = 3;
+public static final int GrabberClose = 4;
+// ID: 5 goes here
+public static final int ArmRetract = 6;
+public static final int ArmExtend = 7;
   }
 }
