@@ -24,7 +24,7 @@ public class Grabber extends SubsystemBase {
         System.out.println(GrabberMotor.getSelectedSensorPosition() / Constants.ClawUnitsPerDegree);
     }
     public double GetEncoderPos() {
-        return GrabberMotor.getSelectedSensorPosition() / 768;
+        return GrabberMotor.getSensorCollection().getIntegratedSensorPosition() / 768;
     }
     public void StopMotor() {
         GrabberMotor.set(ControlMode.PercentOutput, 0);

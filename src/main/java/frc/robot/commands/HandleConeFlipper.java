@@ -57,6 +57,7 @@ public class HandleConeFlipper extends CommandBase{
         down = true;//coneFlipper.MoveDown();
         testingVar = true;
      }
+     
         //ConeFlipper.set(VictorSPXControlMode.PercentOutput, 0.5);   
     //   } else {
     //     if (testingVar) {
