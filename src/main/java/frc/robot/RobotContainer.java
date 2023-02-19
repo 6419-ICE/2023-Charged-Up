@@ -10,9 +10,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import frc.robot.Constants.GrabberConstantsForPIDAndMotionProfile;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HandleConeFlipper;
 import frc.robot.commands.HandleGrabber;
+import frc.robot.commands.HandleGrabberWithPIDAndMotionProfile;
+import frc.robot.commands.MoveBothArmAndGrabberRetract;
+import frc.robot.commands.HandleArmWithPIDAndMotionProfile;
+
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ConeFlipper;
 import frc.robot.commands.AutoDriveOutOfCommunity;
@@ -20,6 +25,8 @@ import frc.robot.commands.AutoPickForTwoCubes;
 import frc.robot.commands.HandleArm;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.GrabberWithPIDAndMotionProfile;
+import frc.robot.subsystems.ArmWithPIDAndMotionProfile;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -37,8 +44,11 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ConeFlipper m_ConeFlipper = new ConeFlipper();
-  private final Grabber m_Grabber = new Grabber();
-  private final Arm m_Arm = new Arm();
+  //private final Grabber m_Grabber = new Grabber();
+  private final GrabberWithPIDAndMotionProfile m_GrabberWithPID = new GrabberWithPIDAndMotionProfile(); 
+  private final ArmWithPIDAndMotionProfile m_ArmWithPID = new ArmWithPIDAndMotionProfile(); 
+
+  //private final Arm m_Arm = new Arm();
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   static Joystick mechanismJoystick = new Joystick(Constants.ButtonBoxID);
@@ -47,8 +57,12 @@ public class RobotContainer {
   static JoystickButton GrabberOpenButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.GrabberOpen);
   static JoystickButton GrabberCloseButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.GrabberClose);
   private HandleConeFlipper handleConeFlipper = new HandleConeFlipper(m_ConeFlipper);
-  private HandleGrabber handleGrabber = new HandleGrabber(m_Grabber);
-  private HandleArm handleArm = new HandleArm(m_Arm);
+  //private HandleGrabber handleGrabber = new HandleGrabber(m_Grabber);
+  private HandleGrabberWithPIDAndMotionProfile handleGrabberWithPID = new HandleGrabberWithPIDAndMotionProfile(m_GrabberWithPID);
+  private HandleArmWithPIDAndMotionProfile handleArmWithPID = new HandleArmWithPIDAndMotionProfile(m_ArmWithPID);
+  private MoveBothArmAndGrabberRetract moveBothArmAndGrabber = new MoveBothArmAndGrabberRetract(m_ArmWithPID, m_GrabberWithPID);
+
+  //private HandleArm handleArm = new HandleArm(m_Arm);
   private static DutyCycleEncoder coneFlipperEncoder = new DutyCycleEncoder(Constants.FlipperEncoderID);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -59,14 +73,19 @@ public class RobotContainer {
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("None", null);
     autoChooser.addOption("Auto Drive Out Of Community", new AutoDriveOutOfCommunity(m_robotDrive));
-    autoChooser.addOption("Auto Two Cubes", new AutoPickForTwoCubes(m_robotDrive));
+    autoChooser.addOption("Auto Two Cubes", new AutoPickForTwoCubes(m_robotDrive,m_ArmWithPID,m_GrabberWithPID));
     SmartDashboard.putData("Autonomous", autoChooser);
     //Shuffleboard.getTab("Gryo tab").add(m_robotDrive.m_gyro);
 
     configureButtonBindings();
+    JoystickButton ArmRetractButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ArmRetract);
+    ArmRetractButton.whileTrue(new MoveBothArmAndGrabberRetract(m_ArmWithPID, m_GrabberWithPID));
     m_ConeFlipper.setDefaultCommand(handleConeFlipper);
-    m_Grabber.setDefaultCommand(handleGrabber);
-    m_Arm.setDefaultCommand(handleArm);
+   // m_Grabber.setDefaultCommand(handleGrabber);
+    //m_Arm.setDefaultCommand(handleArm);
+    m_GrabberWithPID.setDefaultCommand(handleGrabberWithPID);
+    m_ArmWithPID.setDefaultCommand(handleArmWithPID);
+
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
@@ -116,6 +135,9 @@ public class RobotContainer {
  public static boolean GetArmRetractButton() {
   return mechanismJoystick.getRawButton(Constants.GamePadConstants.ArmRetract);
  }
+ public static boolean GetArmGroundButton() {
+  return mechanismJoystick.getRawButton(Constants.GamePadConstants.ArmGround);
+ }
  public static DutyCycleEncoder GetFlipperEncoder() {
   return coneFlipperEncoder;
 }
@@ -128,7 +150,10 @@ public class RobotContainer {
 
   
 
-
+  public void disablePIDSubsystems() {
+    m_GrabberWithPID.disable();
+    m_ArmWithPID.disable();
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
