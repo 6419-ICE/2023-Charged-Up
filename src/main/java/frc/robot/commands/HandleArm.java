@@ -40,24 +40,26 @@ public class HandleArm extends CommandBase{
         } else if (RobotContainer.GetArmRetractButton()) {
             position--;
             
-        } 
+        }  else if (RobotContainer.GetArmTestingButton()) {
+            position = 4;
+        }
         if (m_Arm.GetEncoderPos() - 3 > positions.get(position) ) {
         m_Arm.MoveUp();
         } else if (m_Arm.GetEncoderPos() + 3 < positions.get(position)) {
         m_Arm.MoveDown();
         }
         else {
-            if (m_Arm.GetEncoderPos() > 180) {
-            m_Arm.HoldMotor(true);
-        } else {
-            m_Arm.HoldMotor(false);
-        }
+            if (m_Arm.GetEncoderPos() > 115) {
+               m_Arm.HoldMotor(true);
+            } else {
+                m_Arm.HoldMotor(false);
+            }
             
         }
 
         super.execute();
     }
-
+    
     @Override
     public void initialize() {
         // TODO Auto-generated method stub

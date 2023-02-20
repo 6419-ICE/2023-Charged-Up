@@ -8,8 +8,7 @@ public class HandleGrabber extends CommandBase{
     Grabber m_grabber;
     boolean Open = false;
     boolean Close = false;
-    public HandleGrabber() {
-    }
+    
     public HandleGrabber(Grabber grabber) {
         m_grabber = grabber;
         addRequirements(m_grabber);

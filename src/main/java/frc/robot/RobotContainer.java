@@ -44,7 +44,7 @@ public class RobotContainer {
   static JoystickButton coneFlipperDownButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ConeFlipperDown);
   static JoystickButton GrabberOpenButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.GrabberOpen);
   static JoystickButton GrabberCloseButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.GrabberClose);
-  private HandleConeFlipper handleConeFlipper = new HandleConeFlipper(m_ConeFlipper);
+  private HandleConeFlipper handleConeFlipper = new HandleConeFlipper(m_ConeFlipper, m_Arm);
   private HandleGrabber handleGrabber = new HandleGrabber(m_Grabber);
   private HandleArm handleArm = new HandleArm(m_Arm);
   private static DutyCycleEncoder coneFlipperEncoder = new DutyCycleEncoder(Constants.FlipperEncoderID);
@@ -110,6 +110,9 @@ public class RobotContainer {
  }
  public static boolean GetArmRetractButton() {
   return mechanismJoystick.getRawButton(Constants.GamePadConstants.ArmRetract);
+ }
+ public static boolean GetArmTestingButton() {
+  return mechanismJoystick.getRawButton(5);
  }
  public static DutyCycleEncoder GetFlipperEncoder() {
   return coneFlipperEncoder;

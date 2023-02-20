@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ConeFlipper;
 
 public class HandleConeFlipper extends CommandBase{
@@ -19,10 +20,12 @@ public class HandleConeFlipper extends CommandBase{
     boolean up = false;
     boolean pos = true;
     DigitalInput testHall = new DigitalInput(8);
+    Arm m_Arm;
     private final ConeFlipper m_ConeFlipper;
     // Constructor, used to pass in The ConeFlipper object to be used
-    public HandleConeFlipper(ConeFlipper coneFlipper) {
+    public HandleConeFlipper(ConeFlipper coneFlipper, Arm arm) {
         m_ConeFlipper = coneFlipper;
+        m_Arm = arm;
         //Makes the ConeFlipper object required by the command
         addRequirements(m_ConeFlipper);
     }
@@ -43,8 +46,11 @@ public class HandleConeFlipper extends CommandBase{
         } else {
             pos = true;
         }
+        if (m_Arm.GetEncoderPos() < 3 ) {
+            down = true;
+        }
        // System.out.println(testHall.get() + " POS: " + pos);
-        if (RobotContainer.GetConeFlipperUpButton()) {
+       else if (RobotContainer.GetConeFlipperUpButton()) {
             up = true; //coneFlipper.MoveUp();
            // System.out.print( new BigDecimal(RobotContainer.GetFlipperPos()).setScale(3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString() + "-");
            
