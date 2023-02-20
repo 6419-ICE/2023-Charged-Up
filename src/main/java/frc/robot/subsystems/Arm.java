@@ -28,7 +28,7 @@ public class Arm extends SubsystemBase {
        // System.out.println(ArmMotor.getSelectedSensorPosition());
     }
     public double GetEncoderPos() {
-        return ArmMotor.getSensorCollection().getIntegratedSensorPosition() / 1024;
+        return ArmMotor.getSensorCollection().getIntegratedSensorPosition();
     }
      public void StopMotor() {
         //System.out.println(ArmMotor.getSelectedSensorPosition());

@@ -1,4 +1,22 @@
 {
+<<<<<<< HEAD
+=======
+  "FMS": {
+    "window": {
+      "visible": false
+    }
+  },
+  "Keyboard 0 Settings": {
+    "window": {
+      "visible": true
+    }
+  },
+  "Keyboard 1 Settings": {
+    "window": {
+      "visible": true
+    }
+  },
+>>>>>>> origin/main
   "keyboardJoysticks": [
     {
       "axisConfig": [
@@ -51,12 +69,23 @@
         }
       ],
       "axisCount": 2,
+<<<<<<< HEAD
       "buttonCount": 4,
+=======
+      "buttonCount": 7,
+>>>>>>> origin/main
       "buttonKeys": [
         77,
         44,
         46,
+<<<<<<< HEAD
         47
+=======
+        47,
+        80,
+        91,
+        93
+>>>>>>> origin/main
       ],
       "povCount": 0
     },
@@ -88,5 +117,16 @@
       "buttonCount": 0,
       "povCount": 0
     }
+<<<<<<< HEAD
+=======
+  ],
+  "robotJoysticks": [
+    {
+      "guid": "Keyboard0"
+    },
+    {
+      "guid": "Keyboard1"
+    }
+>>>>>>> origin/main
   ]
 }
