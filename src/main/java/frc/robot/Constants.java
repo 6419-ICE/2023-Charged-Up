@@ -23,12 +23,16 @@ import edu.wpi.first.math.util.Units;
  * wherever the
  * constants are needed, to reduce verbosity.
  */
+
+
 public final class Constants {
   public static final int ButtonBoxID = 1;
+  public static final int FlipperEncoderID = 9;
+  //public static final double GripperUnitsPerDegree = 768;
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 4.8;
+    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(8);
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     // Chassis configuration
@@ -49,6 +53,9 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDss
+    public static final int GrabberID = 12;
+    public static final int ArmID = 11;
+
     public static final int kFrontLeftDrivingCanId = 2;
     public static final int kRearLeftDrivingCanId = 4;
     public static final int kFrontRightDrivingCanId = 8;
@@ -77,7 +84,7 @@ public final class Constants {
     public static final double kWheelDiameterMeters = 0.0762;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
-    public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
+    public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 12); //15
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
         / kDrivingMotorReduction;
 
@@ -138,7 +145,79 @@ public final class Constants {
   }
   
   public static final class GamePadConstants {
-public static final int ConeFlipperUp = 1;
-public static final int ConeFlipperDown = 2;
+    public static final int ConeFlipperUp = 1;
+    public static final int ConeFlipperDown = 2;
+    public static final int GrabberOpen = 3;
+    public static final int GrabberClose = 4;
+    // ID: 5 goes here
+    public static final int ArmRetract = 6;
+    public static final int ArmExtend = 7;
+    public static final int ArmGround = 8;
+
   }
+
+  public static class GrabberConstantsForPIDAndMotionProfile{
+    public static final int kMotorPort = 12;
+
+    public static final double kP = 1;//1
+
+    // These are fake gains; in actuality these must be determined individually for each robot
+    public static final double kSVolts = 1;
+    public static final double kGVolts = 1;
+    public static final double kVVoltSecondPerRad = 0.5;
+    public static final double kAVoltSecondSquaredPerRad = 0.1;
+    public static final double GrabberUnitsPerDegree = 768;
+
+
+    public static final double kMaxVelocityRadPerSecond = 3.0;
+    public static final double kMaxAccelerationRadPerSecSquared = 10.0;
+
+    public static final int[] kEncoderPorts = new int[] {4, 5};
+    public static final int kEncoderPPR = 256;
+    public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
+
+    // The offset of the arm from the horizontal in its neutral position,
+    // measured from the horizontal
+    public static final double kArmOffsetRads = 0.5;
+    //saftey Offsets.
+    public static final double kArmMinOffsetRads = Math.toRadians(0);
+    public static final double kArmMaxOffsetRads = Math.toRadians(90);
+    
+
+  }
+
+
+  public static class ArmConstantsForPIDAndMotionProfile{
+    public static final int kMotorPort = 11;
+    public static final double homePosition = 0; 
+    public static final double dropPosition = 165; 
+    public static final double groundPosition = 260; 
+    public static final double kP = 1.3;//1
+    public static final double kd = 0.11; 
+
+    // These are fake gains; in actuality these must be determined individually for each robot
+    public static final double kSVolts = 1;
+    public static final double kGVolts = 1;
+    public static final double kVVoltSecondPerRad = 0.5;
+    public static final double kAVoltSecondSquaredPerRad = 0.1;
+    public static final double ArmUnitsPerDegree = 1024;
+
+
+    public static final double kMaxVelocityRadPerSecond = 1.4;
+    public static final double kMaxAccelerationRadPerSecSquared = 3.2;
+
+    public static final int[] kEncoderPorts = new int[] {4, 5};
+    public static final int kEncoderPPR = 256;
+    public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
+
+    // The offset of the arm from the horizontal in its neutral position,
+    // measured from the horizontal
+    public static final double kArmOffsetRads = 0.5;
+    //saftey Offsets.
+    public static final double kArmMinOffsetRads = Math.toRadians(0);
+    public static final double kArmMaxOffsetRads = Math.toRadians(265);
+    
+
+  }
+
 }
