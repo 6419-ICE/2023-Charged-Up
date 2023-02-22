@@ -4,6 +4,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -23,10 +27,14 @@ public class AutoEngageOnChargingStation extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       Commands.sequence(
-        new WaitCommand(.5),
-        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoEngageOnChargingStation())
+        new WaitCommand(0.02),
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoEngageOnChargingStation()),
+        new BalanceGyroCommand(driveSubsystem)
       )
     );
+  
 
   }
+
+ 
 }
