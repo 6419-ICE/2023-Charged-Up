@@ -28,8 +28,8 @@ public class AutoEngageOnChargingStation extends SequentialCommandGroup {
     addCommands(
       Commands.sequence(
         new WaitCommand(0.02),
-        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoEngageOnChargingStation()),
-        new BalanceGyroCommand(driveSubsystem)
+        new RunforwardUntilAngleCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoEngageOnChargingStation(), true)//,
+        //new BalanceGyroCommand(driveSubsystem)
       )
     );
   
