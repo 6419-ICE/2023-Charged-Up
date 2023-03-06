@@ -20,12 +20,12 @@ public class HandleConeFlipper extends CommandBase{
     boolean up = false;
     boolean pos = true;
     DigitalInput testHall = new DigitalInput(8);
-    Arm m_Arm;
+    
     private final ConeFlipper m_ConeFlipper;
     // Constructor, used to pass in The ConeFlipper object to be used
-    public HandleConeFlipper(ConeFlipper coneFlipper, Arm arm) {
+    public HandleConeFlipper(ConeFlipper coneFlipper) {
         m_ConeFlipper = coneFlipper;
-        m_Arm = arm;
+        
         //Makes the ConeFlipper object required by the command
         addRequirements(m_ConeFlipper);
     }
@@ -46,17 +46,9 @@ public class HandleConeFlipper extends CommandBase{
         } else {
             pos = true;
         }
-        if (m_Arm.GetEncoderPos() < 3 ) {
-            down = true;
+        if (RobotContainer.GetConeFlipperUpButton()) {
+            up = true;
         }
-       // System.out.println(testHall.get() + " POS: " + pos);
-       else if (RobotContainer.GetConeFlipperUpButton()) {
-            up = true; //coneFlipper.MoveUp();
-           // System.out.print( new BigDecimal(RobotContainer.GetFlipperPos()).setScale(3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString() + "-");
-           
-            testingVar = true;
-           // ConeFlipper.set(ControlMode.PercentOutput, -0.5);
-      } 
       //checks for button press
      else if (RobotContainer.GetConeFlipperDownButton()) {
         //System.out.print(  "-" + new BigDecimal(RobotContainer.GetFlipperPos()).setScale(3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString() );

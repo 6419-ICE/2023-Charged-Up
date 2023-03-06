@@ -40,9 +40,7 @@ public class HandleArm extends CommandBase{
         } else if (RobotContainer.GetArmRetractButton()) {
             position--;
             
-        }  else if (RobotContainer.GetArmTestingButton()) {
-            position = 4;
-        }
+        } 
         if (m_Arm.GetEncoderPos() - 3 > positions.get(position) ) {
         m_Arm.MoveUp();
         } else if (m_Arm.GetEncoderPos() + 3 < positions.get(position)) {

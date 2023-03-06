@@ -149,7 +149,7 @@ public final class Constants {
     public static final int ConeFlipperDown = 2;
     public static final int GrabberOpen = 3;
     public static final int GrabberClose = 4;
-    // ID: 5 goes here
+    public static final int GrabberCloseCube = 5;
     public static final int ArmRetract = 6;
     public static final int ArmExtend = 7;
     public static final int ArmGround = 8;

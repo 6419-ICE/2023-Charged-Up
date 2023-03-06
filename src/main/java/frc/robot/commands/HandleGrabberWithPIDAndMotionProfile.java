@@ -3,9 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.GrabberWithPIDAndMotionProfile;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -31,6 +33,7 @@ public class HandleGrabberWithPIDAndMotionProfile extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putNumber("GrabberPos", m_grabber.getPos());
     if(RobotContainer.GetGrabberOpenButton())
     {
       m_grabber.openGripper();
@@ -39,7 +42,9 @@ public class HandleGrabberWithPIDAndMotionProfile extends CommandBase {
     {
       m_grabber.CloseFully();
     }
-
+    if (RobotContainer.GetGrabberCloseCubeButton()) {
+      m_grabber.CloseOnCube();
+    }
   
     SmartDashboard.putNumber("PositionInDegrees", Math.toDegrees(m_grabber.getMeasurement()));
   }

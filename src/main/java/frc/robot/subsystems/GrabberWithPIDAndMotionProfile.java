@@ -62,12 +62,12 @@ public class GrabberWithPIDAndMotionProfile extends ProfiledPIDSubsystem {
 }
 public void CloseOnCone(){
     currentStateForGrabber = statesForGrabber.Open;
-    setGoal(Math.toRadians(10));
+    setGoal(Math.toRadians(0));
     this.enable(); 
 }
 public void CloseOnCube(){
     currentStateForGrabber = statesForGrabber.Open;
-    setGoal(Math.toRadians(20));
+    setGoal(Math.toRadians(15));
     this.enable(); 
 }
 public void CloseFully(){
@@ -75,6 +75,7 @@ public void CloseFully(){
     setGoal(Math.toRadians(0));
     this.enable();
 } 
+
 
 
 
@@ -93,5 +94,8 @@ public void CloseFully(){
   @Override
   public double getMeasurement() {
     return Math.toRadians(GrabberMotor.getSensorCollection().getIntegratedSensorPosition() / Constants.GrabberConstantsForPIDAndMotionProfile.GrabberUnitsPerDegree); //+ GrabberConstantsForPIDAndMotionProfile.kArmOffsetRads;
+  }
+  public double getPos() {
+    return GrabberMotor.getSensorCollection().getIntegratedSensorPosition();
   }
 }

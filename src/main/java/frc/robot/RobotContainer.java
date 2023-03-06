@@ -143,7 +143,9 @@ public class RobotContainer {
  public static DutyCycleEncoder GetFlipperEncoder() {
   return coneFlipperEncoder;
 }
-
+public static boolean GetGrabberCloseCubeButton() {
+  return mechanismJoystick.getRawButton(Constants.GamePadConstants.GrabberCloseCube);
+ } 
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
