@@ -84,17 +84,28 @@ public class TrajectoryPaths {
     
 
     // Trajectory to get onto the charging station
-    // WARNING: DO NOT USE
     public static Trajectory trajectoryAutoEngageOnChargingStation () {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(50,0)),
+            List.of(new Translation2d(0.25,0)),
             // End 100 "meters" straight ahead of where we started, facing forward
-            new Pose2d(100, 0, new Rotation2d(0)),
+            new Pose2d(0.5, 0, new Rotation2d(0)),
             config);
     
             return trajectory; 
-        }
+    }
+
+    public static Trajectory trajectoryAutoDriveOut () {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d((Units.feetToMeters(18)),0), new Translation2d((Units.feetToMeters(18)),Units.feetToMeters(5.5))),
+            // End 14 straight ahead of where we started, facing forward
+            new Pose2d(Units.feetToMeters(4.25), Units.feetToMeters(4), new Rotation2d(0)),
+            config);
+            return trajectory; 
+    }
 }

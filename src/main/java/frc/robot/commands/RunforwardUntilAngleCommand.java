@@ -1,40 +1,32 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.AutoConstants;
 
 
 // This is a command to go forward practically infinitely until it reaches a certain angle
-public class RunforwardUntilAngleCommand extends TrajectoryCommand{
+public class RunforwardUntilAngleCommand extends CommandBase {
   
   private DriveSubsystem m_driveSubSystem;
-  private Trajectory m_Trajectory;
   private boolean m_isForward;
   private double x_angle;
-  private ADIS16470_IMU imu;
+  private double y_angle;
+  private double z_angle;
 
-    public RunforwardUntilAngleCommand(DriveSubsystem driveSubSystem, Trajectory trajectory, boolean isForward)
-    {
-      super(driveSubSystem, trajectory);
+  public RunforwardUntilAngleCommand(DriveSubsystem driveSubSystem, boolean isForward)
+  {
+    //Constructor that builds the object and stores the direction its going
       m_isForward = isForward;
       m_driveSubSystem = driveSubSystem;
-      m_Trajectory = trajectory;
-    }
+  }
 
     
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_driveSubSystem.resetOdometry(m_Trajectory.getInitialPose());
+    m_driveSubSystem.drive(0.4, 0, 0, true);
     super.initialize();
   }
 
@@ -42,21 +34,25 @@ public class RunforwardUntilAngleCommand extends TrajectoryCommand{
   @Override
   public void execute() {
     System.out.println("execute");
-    super.execute();
-    imu.setYawAxis(IMUAxis.kX);
-    this.x_angle = imu.getAngle();
+    double[] anglesList = m_driveSubSystem.getAngles();
+    x_angle = anglesList[0];
+    y_angle = anglesList[1];
+    z_angle = anglesList[2];
     SmartDashboard.putNumber("xAngle", x_angle);
-    if (((this.x_angle > 5) && (this.m_isForward)) || ((this.x_angle < -5) && (!this.m_isForward))) {
+    SmartDashboard.putNumber("yAngle", y_angle);
+    SmartDashboard.putNumber("zAngle", z_angle);
+    if /*(((*/(this.x_angle > Math.toRadians(5)) {
+    // && (this.m_isForward) || ((this.x_angle < -5) && (!this.m_isForward)) || ((this.y_angle > 5) && (this.m_isForward)) || ((this.y_angle < -5) && (!this.m_isForward))) {
       end(true);
     }
+    super.execute();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     super.end(interrupted);
-    imu.setYawAxis(IMUAxis.kZ);
-    m_driveSubSystem.drive(0, 0, 0, false);
+    m_driveSubSystem.drive(0, 0, 0, true);
   }
 
   // Returns true when the command should end.

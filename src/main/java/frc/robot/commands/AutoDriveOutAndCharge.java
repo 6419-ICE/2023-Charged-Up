@@ -13,24 +13,18 @@ import frc.robot.TrajectoryPaths;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class AutoDriveOutAndCharge extends SequentialCommandGroup {
+  /** Creates a new Autonomous Program. */
 
-// This auto is meant to drive straight onto the charging platform, and then balance on it
-public class AutoEngageOnChargingStation extends SequentialCommandGroup {
-  /* Creates a new Autonomous Program. */
-
-  public AutoEngageOnChargingStation(DriveSubsystem driveSubsystem) {
+  public AutoDriveOutAndCharge(DriveSubsystem driveSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       Commands.sequence(
-        new WaitCommand(0.02),
-        new RunforwardUntilAngleCommand(driveSubsystem, true)//,
-        //new BalanceGyroCommand(driveSubsystem)
+        new WaitCommand(.5),
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoDriveOut())
       )
     );
-  
 
   }
-
- 
 }
