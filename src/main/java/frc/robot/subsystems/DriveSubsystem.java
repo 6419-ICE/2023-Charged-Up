@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.lang.reflect.Array;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -12,6 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -174,5 +177,20 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getTurnRate() {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  /* */
+  public double[] getAngles() {
+    double x_angle;
+    double y_angle;
+    double z_angle;
+    m_gyro.setYawAxis(IMUAxis.kX);
+    x_angle = m_gyro.getAngle();
+    m_gyro.setYawAxis(IMUAxis.kY);
+    y_angle = m_gyro.getAngle();
+    m_gyro.setYawAxis(IMUAxis.kZ);
+    z_angle = m_gyro.getAngle();
+    double[] angles = {x_angle, y_angle, z_angle};
+    return angles;
   }
 }
