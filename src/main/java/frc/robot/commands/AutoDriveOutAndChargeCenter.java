@@ -4,12 +4,13 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.*;
 import frc.robot.TrajectoryPaths;
-
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
@@ -20,7 +21,10 @@ public class AutoDriveOutAndChargeCenter extends SequentialCommandGroup {
     addCommands(
       Commands.sequence(
         
-        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoDriveOutCenter())
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoDriveOutCenter()),
+        new WaitCommand(1)
+        //new TrajectoryCommand(driveSubsystem,TrajectoryPaths.trajectoryBringBackBalance())
+
       )
     );
 
