@@ -20,6 +20,7 @@ import frc.robot.commands.HandleArmWithPIDAndMotionProfile;
 
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ConeFlipper;
+import frc.robot.commands.AutoDriveOutAndChargeCenter;
 import frc.robot.commands.AutoDriveOutOfCommunity;
 import frc.robot.commands.AutoEngageOnChargingStation;
 import frc.robot.commands.AutoPickForTwoCubes;
@@ -76,6 +77,7 @@ public class RobotContainer {
     autoChooser.addOption("Auto Drive Out Of Community", new AutoDriveOutOfCommunity(m_robotDrive));
     autoChooser.addOption("Auto Two Cubes", new AutoPickForTwoCubes(m_robotDrive,m_ArmWithPID,m_GrabberWithPID));
     autoChooser.addOption("Auto Engage On Charging Station Center", new AutoEngageOnChargingStation(m_robotDrive));
+    autoChooser.addOption("Auto Charge on Charging Station Center", new AutoDriveOutAndChargeCenter(m_robotDrive));
     SmartDashboard.putData("Autonomous", autoChooser);
     //Shuffleboard.getTab("Gryo tab").add(m_robotDrive.m_gyro);
 

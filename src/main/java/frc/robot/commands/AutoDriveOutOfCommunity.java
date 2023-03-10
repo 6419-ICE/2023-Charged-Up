@@ -38,7 +38,7 @@ public class AutoDriveOutOfCommunity extends SequentialCommandGroup {
     );
     */
       Commands.sequence(
-        new WaitCommand(.5),
+       
         new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoDriveOutOfCommunity())
       )
     );
