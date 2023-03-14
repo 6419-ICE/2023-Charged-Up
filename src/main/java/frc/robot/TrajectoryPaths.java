@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class TrajectoryPaths {
@@ -62,7 +63,7 @@ public class TrajectoryPaths {
             // Pass through these two interior waypoints, making an 's' curve path
             List.of(new Translation2d(1,0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(Units.inchesToMeters(224), 0, Rotation2d.fromDegrees(179.4)),
+            new Pose2d(Units.inchesToMeters(241), 0, Rotation2d.fromDegrees(179.4)),
             config);
     
             return trajectory; 
@@ -112,6 +113,21 @@ public class TrajectoryPaths {
         return trajectory; 
     }
 
+    public static Trajectory trajectoryAutoDriveOutRight() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d((Units.feetToMeters(22)),0), 
+            new Translation2d((Units.feetToMeters(22)),Units.feetToMeters(-6.0)), 
+            new Translation2d((Units.inchesToMeters(38)),Units.feetToMeters(-6.0))
+            ),
+            // End 14 straight ahead of where we started, facing forward
+            new Pose2d(Units.inchesToMeters(41), Units.feetToMeters(-6.0), new Rotation2d(Units.degreesToRadians(0))),
+            config);
+        return trajectory; 
+    }
+    
     public static Trajectory trajectoryAutoDriveOutCenter() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
@@ -123,4 +139,22 @@ public class TrajectoryPaths {
             config);
             return trajectory; 
     }
+
+
+    public static Trajectory trajectoryMoveToCube() {
+      Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    new Pose2d(0,0, new Rotation2d(0)), 
+      List.of(
+    //new Translation2d(Units.inchesToMeters(100), 0),
+    new Translation2d(Units.inchesToMeters(200), 0)
+    //new Translation2d(Units.inchesToMeters(300), 0)
+    ),
+      new Pose2d(Units.inchesToMeters(224),0,new Rotation2d(0)), 
+      config
+      );
+      
+      
+        return trajectory;
+    }
+    
 }

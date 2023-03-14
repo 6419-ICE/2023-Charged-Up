@@ -13,16 +13,16 @@ import frc.robot.TrajectoryPaths;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoDriveOutAndCharge extends SequentialCommandGroup {
+public class AutoDriveOutAndChargeLeft extends SequentialCommandGroup {
   /** Creates a new Autonomous Program. */
 
-  public AutoDriveOutAndCharge(DriveSubsystem driveSubsystem) {
+  public AutoDriveOutAndChargeLeft(DriveSubsystem driveSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       Commands.sequence(
         new WaitCommand(.5),
-        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoDriveOut())
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoDriveOutLeft())
       )
     );
 

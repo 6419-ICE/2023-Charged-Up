@@ -4,13 +4,15 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.subsystems.*;
 import frc.robot.TrajectoryPaths;
+import frc.robot.subsystems.ArmWithPIDAndMotionProfile;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.GrabberWithPIDAndMotionProfile;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -21,28 +23,28 @@ public class AutoPickForTwoCubes extends SequentialCommandGroup {
   public AutoPickForTwoCubes(DriveSubsystem driveSubsystem, ArmWithPIDAndMotionProfile m_arm, GrabberWithPIDAndMotionProfile m_grabber) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    driveSubsystem.resetEncoders();
+    SmartDashboard.putNumberArray("before", driveSubsystem.getEncoderPositions());
     addCommands(
-      Commands.sequence(
-        new ArmToDropOffCommand(m_arm),
-        new WaitCommand(2),
-        new openGrabber(m_grabber),
-        Commands.parallel(
-        new moveArmToGround(m_arm),
-        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock())
-        ),
-        new closeGrabber(m_grabber),
-        new WaitCommand(2),
-        Commands.parallel(
-        new MoveBothArmAndGrabberRetract(m_arm, m_grabber),
-        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoBackTowardsDropOffOfSecondBlock())
-        ),
-        new ArmToDropOffCommand(m_arm),
-        new WaitCommand(2),
-        new openGrabber(m_grabber)
-
-
+      Commands.sequence (
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryMoveToCube())
+        //new ArmToDropOffCommand(m_arm), withTimeout(5)
+        
+        // new openGrabber(m_grabber), withTimeout(5),
+        
+        // new moveArmToGround(m_arm), withTimeout(5),
+        // new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock()), withTimeout(5),
+        // new closeGrabber(m_grabber), withTimeout(5),
+        
+        
+        // new MoveBothArmAndGrabberRetract(m_arm, m_grabber), withTimeout(5),
+        // new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoBackTowardsDropOffOfSecondBlock()), withTimeout(5),
+        // new ArmToDropOffCommand(m_arm), withTimeout(5),
+        // new openGrabber(m_grabber)
+    
+        
       )
     );
-
+    SmartDashboard.putNumberArray("after", driveSubsystem.getEncoderPositions());
   }
 }

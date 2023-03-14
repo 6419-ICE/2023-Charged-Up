@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.Constants.DriveConstants;
@@ -45,6 +46,13 @@ public class TrajectoryCommand extends SwerveControllerCommand{
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("INITIALIZE");
+    System.out.println("INITIALIZE");
+    System.out.println("INITIALIZE");
+    System.out.println("INITIALIZE");
+    System.out.println("INITIALIZE");
+    System.out.println("INITIALIZE");
+    System.out.println("INITIALIZE");
     //m_driveSubSystem.setMaxMotorSpeed(Constants.DrivetrainConstants.speedLmt);
     //m_drive.resetHeading();
     m_driveSubSystem.resetOdometry(m_Trajectory.getInitialPose());
@@ -54,7 +62,12 @@ public class TrajectoryCommand extends SwerveControllerCommand{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("execute");
+    System.out.println("FrontLeft" + m_driveSubSystem.getEncoderPositions()[0]);
+    System.out.println("FrontRight" + m_driveSubSystem.getEncoderPositions()[1]);
+    System.out.println("BackLeft" + m_driveSubSystem.getEncoderPositions()[2]);
+    System.out.println("BackRight" + m_driveSubSystem.getEncoderPositions()[3]);
+    //SmartDashboard.putNumber("Current Pose", m_driveSubSystem.getPose().getX());
+    //System.out.println("execute");
     super.execute();
   }
 

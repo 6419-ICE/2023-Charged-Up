@@ -1,8 +1,10 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
 
@@ -26,7 +28,8 @@ public class RunforwardUntilAngleCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_driveSubSystem.drive(0.4, 0, 0, true);
+    m_driveSubSystem.ResetGyro();
+    
     super.initialize();
   }
 
@@ -34,25 +37,32 @@ public class RunforwardUntilAngleCommand extends CommandBase {
   @Override
   public void execute() {
     System.out.println("execute");
-    double[] anglesList = m_driveSubSystem.getAngles();
-    x_angle = anglesList[0];
-    y_angle = anglesList[1];
-    z_angle = anglesList[2];
-    SmartDashboard.putNumber("xAngle", x_angle);
-    SmartDashboard.putNumber("yAngle", y_angle);
-    SmartDashboard.putNumber("zAngle", z_angle);
-    if /*(((*/(this.x_angle > Math.toRadians(5)) {
-    // && (this.m_isForward) || ((this.x_angle < -5) && (!this.m_isForward)) || ((this.y_angle > 5) && (this.m_isForward)) || ((this.y_angle < -5) && (!this.m_isForward))) {
-      end(true);
-    }
+    // double[] anglesList = m_driveSubSystem.getAngles();
+    // x_angle = anglesList[0];
+    // y_angle = anglesList[1];
+    // z_angle = anglesList[2];
+    // SmartDashboard.putNumber("xAngle", anglesList[0]);
+    // SmartDashboard.putNumber("yAngle", anglesList[1]);
+    // SmartDashboard.putNumber("zAngle", anglesList[2]);
+    m_driveSubSystem.drive(0.8, 0, 0, true);
+    new WaitCommand(3);
+    // if (!(anglesList[1] > Math.toRadians(5))) {
+    // // && (this.m_isForward) || ((this. x_angle < -5) && (!this.m_isForward)) || ((this.y_angle > 5) && (this.m_isForward)) || ((this.y_angle < -5) && (!this.m_isForward))) {
+    //   //m_driveSubSystem.setModuleStates(new SwerveModuleState[] {new SwerveModuleState(5.0, new Rotation2d(0)),new SwerveModuleState(5.0, new Rotation2d(0)),new SwerveModuleState(5.0, new Rotation2d(0)),new SwerveModuleState(5.0, new Rotation2d(0))});
+      
+    // } else {
+    //   end(false);
+    // }
     super.execute();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //m_driveSubSystem.setModuleStates(new SwerveModuleState[] {new SwerveModuleState(),new SwerveModuleState(),new SwerveModuleState(),new SwerveModuleState()});
+   m_driveSubSystem.drive(0,0,0,true);
     super.end(interrupted);
-    m_driveSubSystem.drive(0, 0, 0, true);
+    
   }
 
   // Returns true when the command should end.

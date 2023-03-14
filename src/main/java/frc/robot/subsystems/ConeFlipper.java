@@ -14,13 +14,13 @@ public class ConeFlipper extends SubsystemBase{
         
     }
     
-    public void MoveUp() {
+    public void MoveUp(Double Amount) {
         // Sets motor positive, making the Cone Flipper move up
-        ConeFlipperMotor.set(VictorSPXControlMode.PercentOutput, ConeFlipperMaxPower);
+        ConeFlipperMotor.set(VictorSPXControlMode.PercentOutput, Amount);
     }
-    public void MoveDown() {
+    public void MoveDown(Double Amount) {
         // Sets motor negative, making the Cone Flipper move down
-        ConeFlipperMotor.set(VictorSPXControlMode.PercentOutput, ConeFlipperMinPower);
+        ConeFlipperMotor.set(VictorSPXControlMode.PercentOutput, -Amount);
     }
     public void StopMotor() {
         // Stops motor 

@@ -16,12 +16,16 @@ import frc.robot.commands.HandleConeFlipper;
 import frc.robot.commands.HandleGrabber;
 import frc.robot.commands.HandleGrabberWithPIDAndMotionProfile;
 import frc.robot.commands.MoveBothArmAndGrabberRetract;
+import frc.robot.commands.RunforwardUntilAngleCommand;
 import frc.robot.commands.HandleArmWithPIDAndMotionProfile;
 
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ConeFlipper;
-import frc.robot.commands.AutoDriveOutAndCharge;
+
+import frc.robot.commands.AutoDriveOutAndChargeLeft;
+import frc.robot.commands.AutoDriveOutAndChargeRight;
 import frc.robot.commands.AutoDriveOutOfCommunity;
+import frc.robot.commands.AutoDriveUntilAngle;
 import frc.robot.commands.AutoEngageOnChargingStation;
 import frc.robot.commands.AutoPickForTwoCubes;
 import frc.robot.commands.HandleArm;
@@ -77,7 +81,9 @@ public class RobotContainer {
     autoChooser.addOption("Auto Drive Out Of Community", new AutoDriveOutOfCommunity(m_robotDrive));
     autoChooser.addOption("Auto Two Cubes", new AutoPickForTwoCubes(m_robotDrive,m_ArmWithPID,m_GrabberWithPID));
     autoChooser.addOption("Auto Engage on Charging Station Center", new AutoEngageOnChargingStation(m_robotDrive));
-    autoChooser.addOption("Auto Charge on Charging Station", new AutoDriveOutAndCharge(m_robotDrive));
+    autoChooser.addOption("Auto Charge on Charging Station Left", new AutoDriveOutAndChargeLeft(m_robotDrive));
+    autoChooser.addOption("Aurto Charge on Charging Station Right ", new AutoDriveOutAndChargeRight(m_robotDrive));
+    autoChooser.addOption("Run Until Angle", new AutoDriveUntilAngle(m_robotDrive));
     SmartDashboard.putData("Autonomous", autoChooser);
     //Shuffleboard.getTab("Gryo tab").add(m_robotDrive.m_gyro);
 

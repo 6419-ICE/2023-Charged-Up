@@ -32,7 +32,7 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(3);
+    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(13);
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     // Chassis configuration
@@ -84,7 +84,7 @@ public final class Constants {
     public static final double kWheelDiameterMeters = 0.0762;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
-    public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 12); //15
+    public static final double kDrivingMotorReduction = 5.5;//(45 * 22) / (kDrivingMotorPinionTeeth * 15); //15
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
         / kDrivingMotorReduction;
 
@@ -99,7 +99,7 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    public static final double kDrivingP = 0.04;
+    public static final double kDrivingP = .45; //0.055726;
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 0;
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
@@ -127,10 +127,10 @@ public final class Constants {
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+    public static final double kMaxAngularSpeedRadiansPerSecond = 2*Math.PI;
+    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.pow(Math.PI, 1);
 
-    public static final double kPXController = 1;
+    public static final double kPXController = 5;
     public static final double kPYController = 1;
     public static final double kPThetaController = 1;
 
@@ -162,10 +162,10 @@ public final class Constants {
     public static final double kP = 1;//1
 
     // These are fake gains; in actuality these must be determined individually for each robot
-    public static final double kSVolts = 1;
+    public static final double kSVolts = 0.26158 ; //Added 0.02
     public static final double kGVolts = 1;
-    public static final double kVVoltSecondPerRad = 0.5;
-    public static final double kAVoltSecondSquaredPerRad = 0.1;
+    public static final double kVVoltSecondPerRad = 2.918;
+    public static final double kAVoltSecondSquaredPerRad = 0.47008;
     public static final double GrabberUnitsPerDegree = 768;
 
 

@@ -47,6 +47,7 @@ public class HandleArmWithPIDAndMotionProfile extends CommandBase {
     {
       m_arm.Ground();
     }
+    
 
   
     SmartDashboard.putNumber("PositionInDegreesArm", Math.toDegrees(m_arm.getMeasurement()));

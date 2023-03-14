@@ -91,7 +91,7 @@ public class HandleConeFlipper extends CommandBase{
         //     System.out.print(RobotContainer.GetFlipperEncoder().getDistance());
             
         // }
-        coneFlipper.MoveUp();
+        coneFlipper.MoveUp(0.5);
     }
       } else if (down) {
     //     if (pos = false) {
@@ -111,7 +111,7 @@ public class HandleConeFlipper extends CommandBase{
             System.out.println(RobotContainer.GetFlipperEncoder().getDistance());
         } else {
             System.out.println(RobotContainer.GetFlipperEncoder().getDistance() + "- It Stopped :)");
-            coneFlipper.MoveDown();
+            coneFlipper.MoveDown(0.5);
             
         }
     
@@ -119,7 +119,7 @@ public class HandleConeFlipper extends CommandBase{
         coneFlipper.StopMotor();
     }
       if (RobotContainer.GetConeFlipperDownButton() && RobotContainer.GetConeFlipperUpButton()) {
-        coneFlipper.MoveUp();
+        coneFlipper.MoveUp(0.5);
       }
     
         // TODO Auto-generated method stub 
@@ -128,9 +128,15 @@ public class HandleConeFlipper extends CommandBase{
 
     @Override
     public void initialize() {
+        boolean Homing = false;
+       if (Homing) {
+       while(!testHall.get()) {
+            coneFlipper.MoveUp(0.25);
+       }
+       RobotContainer.GetFlipperEncoder().reset();
+    }
+       coneFlipper.StopMotor();
        
-       
-        RobotContainer.GetFlipperEncoder().reset();
         testingVar = false;
         // TODO Auto-generated method stub
         super.initialize();
