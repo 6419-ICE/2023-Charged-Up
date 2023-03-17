@@ -37,15 +37,16 @@ public class RunforwardUntilAngleCommand extends CommandBase {
   @Override
   public void execute() {
     System.out.println("execute");
-    // double[] anglesList = m_driveSubSystem.getAngles();
-    // x_angle = anglesList[0];
-    // y_angle = anglesList[1];
-    // z_angle = anglesList[2];
-    // SmartDashboard.putNumber("xAngle", anglesList[0]);
-    // SmartDashboard.putNumber("yAngle", anglesList[1]);
-    // SmartDashboard.putNumber("zAngle", anglesList[2]);
+
+    double[] anglesList = m_driveSubSystem.getAngles();
+    x_angle = anglesList[0];
+    y_angle = anglesList[1];
+    z_angle = anglesList[2];
+    SmartDashboard.putNumber("xAngle", m_driveSubSystem.getAngles()[0]);
+    SmartDashboard.putNumber("yAngle", m_driveSubSystem.getAngles()[1]);
+    SmartDashboard.putNumber("zAngle", m_driveSubSystem.getAngles()[2]);
     m_driveSubSystem.drive(0.8, 0, 0, true);
-    new WaitCommand(3);
+    //new WaitCommand(3);
     // if (!(anglesList[1] > Math.toRadians(5))) {
     // // && (this.m_isForward) || ((this. x_angle < -5) && (!this.m_isForward)) || ((this.y_angle > 5) && (this.m_isForward)) || ((this.y_angle < -5) && (!this.m_isForward))) {
     //   //m_driveSubSystem.setModuleStates(new SwerveModuleState[] {new SwerveModuleState(5.0, new Rotation2d(0)),new SwerveModuleState(5.0, new Rotation2d(0)),new SwerveModuleState(5.0, new Rotation2d(0)),new SwerveModuleState(5.0, new Rotation2d(0))});

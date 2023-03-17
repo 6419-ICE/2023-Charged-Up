@@ -117,7 +117,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(m_gyro.getAngle()))
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(m_gyro.getGyroAngleX()))
             : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
@@ -184,17 +184,17 @@ public class DriveSubsystem extends SubsystemBase {
 
   /* */
   public double[] getAngles() {
-    double x_angle;
-    double y_angle;
-    double z_angle;
+    //double x_angle;
+    //double y_angle;
+    //double z_angle;
   
     
-    x_angle = m_gyro.getGyroAngleX();
+    //x_angle = m_gyro.getGyroAngleX();
     
-    y_angle = m_gyro.getGyroAngleY();
+    //y_angle = m_gyro.getGyroAngleY();
     
     
-    z_angle = m_gyro.getGyroAngleZ();
+    //z_angle = m_gyro.getGyroAngleZ();
     
     double[] angles = {m_gyro.getGyroAngleX(), m_gyro.getGyroAngleY(), m_gyro.getGyroAngleZ()};
     
