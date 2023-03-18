@@ -10,7 +10,7 @@ import java.util.function.BooleanSupplier;
 
 public class RunnableAutoDriveUntilAngle implements Runnable {
     DriveSubsystem m_DriveSubsystem;
-    Boolean hasReachedStation = false;
+    public Boolean hasReachedStation = false;
     Boolean hasOvershot = false;
     Boolean facingForward = true;
     Boolean goingForward = true;
@@ -21,11 +21,14 @@ public class RunnableAutoDriveUntilAngle implements Runnable {
         m_DriveSubsystem.ResetGyro();
         this.m_DriveSubsystem = m_DriveSubsystem;
         this.boolSupplier = boolSupplier;
-        this.hasReachedStation = false;
+        hasReachedStation = false;
+        
     }
 
     @Override
     public void run() {
+
+        
         // TODO Auto-generated method stub
 
         SmartDashboard.putNumber("xAngle", m_DriveSubsystem.getAngles()[0]);
@@ -66,5 +69,5 @@ public class RunnableAutoDriveUntilAngle implements Runnable {
         // }
             previousAngle = m_DriveSubsystem.getAngles()[angleValue];
     }
-
+    
 }
