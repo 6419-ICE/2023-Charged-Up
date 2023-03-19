@@ -12,7 +12,7 @@ import frc.robot.subsystems.DriveSubsystem;
 public class AutoDriveUntilAngle extends SequentialCommandGroup{
     
     public AutoDriveUntilAngle(DriveSubsystem m_DriveSubsystem, BoolSupplierDriveUntilAngle boolSupplier) {
-      RunnableAutoDriveUntilAngle AutoDriveRunnable =  new RunnableAutoDriveUntilAngle(m_DriveSubsystem, boolSupplier);
+      RunnableAutoDriveUntilAngle AutoDriveRunnable =  new RunnableAutoDriveUntilAngle(m_DriveSubsystem, boolSupplier, false);
       RunCommand moveTillAngleRunCommand = new RunCommand(
         AutoDriveRunnable,
         m_DriveSubsystem);
