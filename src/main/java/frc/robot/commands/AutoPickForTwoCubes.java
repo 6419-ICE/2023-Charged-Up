@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.*;
 import frc.robot.TrajectoryPaths;
@@ -23,13 +22,31 @@ public class AutoPickForTwoCubes extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       Commands.sequence(
-        new ArmToDropOffCommand(m_arm),
-        new WaitCommand(2),
-        new openGrabber(m_grabber),
+        new GrabberWithPIDProfiledCommand(m_grabber, 0).withTimeout(1),
         Commands.parallel(
-        new moveArmToGround(m_arm),
-        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock())
+          new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(170)).withTimeout(5),
+          Commands.sequence(
+            new WaitCommand(3),
+            new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(90)).withTimeout(2)
+          )
         ),
+        Commands.parallel(
+          new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardToPutArmDown()),
+          Commands.sequence(
+            new WaitCommand(3),
+            new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(260)).withTimeout(4)
+            )
+        ),
+        new TurnToAngleProfiled(180, driveSubsystem),
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock()),
+        new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(0)).withTimeout(2)
+        
+        //new ArmToDropOffCommand(m_arm)
+        //new WaitCommand(2),
+        //new openGrabber(m_grabber)
+       /* Commands.parallel(
+        new moveArmToGround(m_arm),
+        
         new closeGrabber(m_grabber),
         new WaitCommand(2),
         Commands.parallel(
@@ -40,6 +57,7 @@ public class AutoPickForTwoCubes extends SequentialCommandGroup {
         new WaitCommand(2),
         new openGrabber(m_grabber)
 
+         */
 
       )
     );

@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants.ArmConstantsForPIDAndMotionProfile;
@@ -39,6 +40,7 @@ public class ArmWithPIDAndMotionProfile extends ProfiledPIDSubsystem {
     // Start arm at rest in neutral position
     //setGoal(ArmConstantsForPIDAndMotionProfile.kArmOffsetRads);
   }
+  public double goalInAuto= Math.toRadians(280);
 
   public void setGoal(double goal) {
     if (goal > Constants.ArmConstantsForPIDAndMotionProfile.kArmMaxOffsetRads) {
@@ -46,9 +48,15 @@ public class ArmWithPIDAndMotionProfile extends ProfiledPIDSubsystem {
     } else if (goal < Constants.ArmConstantsForPIDAndMotionProfile.kArmMinOffsetRads) {
         goal = Constants.ArmConstantsForPIDAndMotionProfile.kArmMinOffsetRads;
     }
+    goalInAuto = goal; 
     super.setGoal(goal);
     System.out.println("Goal We are Going To" + goal); 
     //this.disable();
+  }
+
+  public double getGoalForAuto()
+  {
+    return goalInAuto;
   }
   public void Home(){
     currentStateForArm = statesForArm.Home;
@@ -76,6 +84,17 @@ public void Ground(){
     //m_motor.setVoltage(output + feedforward);
   }
 //private double testRadians = 0.0;
+
+  @Override
+  public void periodic()
+  {
+    SmartDashboard.putNumber("PositionInDegreesArm", Math.toDegrees(this.getMeasurement()));
+    SmartDashboard.putNumber("GoalPosition", Math.toDegrees(this.getGoalForAuto()));
+
+    super.periodic();
+
+  }
+
   @Override
   public double getMeasurement() {
     return -Math.toRadians(ArmMotor.getSensorCollection().getIntegratedSensorPosition() / Constants.ArmConstantsForPIDAndMotionProfile.ArmUnitsPerDegree); //+ ArmConstantsForPIDAndMotionProfile.kArmOffsetRads;

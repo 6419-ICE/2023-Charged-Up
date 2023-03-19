@@ -15,9 +15,14 @@ public class TrajectoryCommand extends SwerveControllerCommand{
 
     private DriveSubsystem m_driveSubSystem;
     private Trajectory m_Trajectory;
-    ProfiledPIDController thetaController = new ProfiledPIDController(
+
+    private static ProfiledPIDController createThetaController() {
+      var thetaController = new ProfiledPIDController(
         AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-   
+      thetaController.enableContinuousInput(-Math.PI,Math.PI);
+      thetaController.setTolerance(0.01 * Math.PI);
+      return thetaController;
+    }
 
         
     public TrajectoryCommand(DriveSubsystem driveSubSystem, Trajectory trajectory)
@@ -30,14 +35,11 @@ public class TrajectoryCommand extends SwerveControllerCommand{
         // Position controllers
         new PIDController(AutoConstants.kPXController, 0, 0),
         new PIDController(AutoConstants.kPYController, 0, 0),
-        new ProfiledPIDController(
-        AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints),
+        createThetaController(),
         driveSubSystem::setModuleStates,
         driveSubSystem);
         this.m_Trajectory = trajectory; 
         this.m_driveSubSystem = driveSubSystem;
-        //this.the
-        this.thetaController.enableContinuousInput(-Math.PI,Math.PI);
         addRequirements(driveSubSystem);
     }
 

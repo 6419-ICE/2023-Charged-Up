@@ -17,6 +17,7 @@ public class AutoDriveOutOfCommunity extends SequentialCommandGroup {
   /** Creates a new Autonomous Program. */
 
   public AutoDriveOutOfCommunity(DriveSubsystem driveSubsystem) {
+    //driveSubsystem.zeroHeading();
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -38,9 +39,13 @@ public class AutoDriveOutOfCommunity extends SequentialCommandGroup {
     );
     */
       Commands.sequence(
-        new WaitCommand(.5),
-        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoDriveOutOfCommunity())
-      )
+        //new WaitCommand(.5),
+        //new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoDriveOutOfCommunity())
+        //new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardToPutArmDown()),
+        //new WaitCommand(2),
+        //new TurnToAngleProfiled(180,driveSubsystem)
+        new BalanceOnChargeStation(driveSubsystem)
+        )
     );
 
   }

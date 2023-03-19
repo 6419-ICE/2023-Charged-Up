@@ -55,14 +55,54 @@ public class TrajectoryPaths {
     }
 
     // These sets of trajectories are being used to Create the Two Cube Autonomus Program
-    public static Trajectory trajectoryAutoForwardTowardsSecondBlock () {
+
+    public static Trajectory trajectoryAutoForwardToPutArmDown () {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through these two interior waypoints, making an 's' curve path
             List.of(new Translation2d(1,0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(Units.inchesToMeters(224), 0, Rotation2d.fromDegrees(179.4)),
+            new Pose2d(Units.inchesToMeters(24), 0, Rotation2d.fromDegrees(0)),
+            config);
+    
+            return trajectory; 
+        }
+
+        public static Trajectory trajectoryAutoTurn180 () {
+            return new Trajectory(
+                List.of(
+                    new Trajectory.State(
+                        0, 0, 0,
+                        new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+                        0),
+                    new Trajectory.State(
+                        3, 0, 0,
+                        new Pose2d(0, 0, Rotation2d.fromDegrees(179.4)),
+                        0
+                    )
+                )
+            );
+            // Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            //     List.of(
+            //         // Start at the origin facing the +X direction
+            //         new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+            //         // End 3 meters straight ahead of where we started, facing forward
+            //         new Pose2d(0, 0, Rotation2d.fromDegrees(179.4))
+            //     ),
+            //     config);
+        
+            // return trajectory;
+        }
+
+    public static Trajectory trajectoryAutoForwardTowardsSecondBlock () {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(Units.inchesToMeters(0), 0, Rotation2d.fromDegrees(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d(Units.inchesToMeters(90),0)),
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(Units.inchesToMeters(180), 0, Rotation2d.fromDegrees(179.9)),
             config);
     
             return trajectory; 
