@@ -90,9 +90,9 @@ public class TrajectoryPaths {
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(0.25,0)),
+            List.of(new Translation2d(1.25,0)),
             // End 100 "meters" straight ahead of where we started, facing forward
-            new Pose2d(0.5, 0, new Rotation2d(0)),
+            new Pose2d(2.5, 0, new Rotation2d(0)),
             config);
     
             return trajectory; 
@@ -105,10 +105,10 @@ public class TrajectoryPaths {
             // Pass through these two interior waypoints, making an 's' curve path
             List.of(new Translation2d((Units.feetToMeters(22)),0), 
             new Translation2d((Units.feetToMeters(22)),Units.feetToMeters(3.75)), 
-            new Translation2d((Units.inchesToMeters(40)),Units.feetToMeters(3.75))
+            new Translation2d((Units.inchesToMeters(120)),Units.feetToMeters(3.75))
             ),
             // End 14 straight ahead of where we started, facing forward
-            new Pose2d(Units.inchesToMeters(43), Units.feetToMeters(6.00), new Rotation2d(Units.degreesToRadians(0))),
+            new Pose2d(Units.inchesToMeters(120), Units.feetToMeters(4), new Rotation2d(Units.degreesToRadians(-90))),
             config);
         return trajectory; 
     }

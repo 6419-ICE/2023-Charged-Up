@@ -8,7 +8,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 import java.util.function.BooleanSupplier;
 
-public class RunnableAutoDriveUntilAngle implements Runnable {
+public class RunnableDriveBackwardsUntilAngle implements Runnable {
     DriveSubsystem m_DriveSubsystem;
     Boolean hasReachedStation = false;
     Boolean hasOvershot = false;
@@ -17,7 +17,7 @@ public class RunnableAutoDriveUntilAngle implements Runnable {
     int yMultiplier = 0;
     int xMultiplier = 0;
     double previousAngle;
-    public RunnableAutoDriveUntilAngle(DriveSubsystem m_DriveSubsystem, BoolSupplierDriveUntilAngle boolSupplier, Boolean isSideways) {
+    public RunnableDriveBackwardsUntilAngle(DriveSubsystem m_DriveSubsystem, BoolSupplierDriveUntilAngle boolSupplier, Boolean isSideways) {
         m_DriveSubsystem.ResetGyro();
         this.m_DriveSubsystem = m_DriveSubsystem;
         this.boolSupplier = boolSupplier;
@@ -25,10 +25,10 @@ public class RunnableAutoDriveUntilAngle implements Runnable {
         if (isSideways) {
             angleValue = 0;
             xMultiplier = 0;
-            yMultiplier = 1;
+            yMultiplier = -1;
         } else {
             angleValue = 1;
-            xMultiplier = 1;
+            xMultiplier = -1;
             yMultiplier = 0;
         }
        
@@ -43,14 +43,14 @@ public class RunnableAutoDriveUntilAngle implements Runnable {
         SmartDashboard.putNumber("xAngle", m_DriveSubsystem.getAngles()[0]);
         SmartDashboard.putNumber("yAngle", m_DriveSubsystem.getAngles()[1]);
         SmartDashboard.putNumber("zAngle", m_DriveSubsystem.getAngles()[2]);
-        if ((m_DriveSubsystem.getAngles()[angleValue] < -11) || (hasReachedStation)) {
+        if ((m_DriveSubsystem.getAngles()[angleValue] > 11) || (hasReachedStation)) {
             //Moves on station
             hasReachedStation = true;
             System.out.println("Keep Driving");
             m_DriveSubsystem.drive(xMultiplier * 0.1, yMultiplier * 0.1, 0, true);
             //Checks if robot is falling
-            if (((m_DriveSubsystem.getAngles()[angleValue] > previousAngle + 0.07)) && 
-            ((m_DriveSubsystem.getAngles()[angleValue] >  -10))/*MathUtil.applyDeadband(m_DriveSubsystem.getAngles()[1], 3) == 0*/) {
+            if (((m_DriveSubsystem.getAngles()[angleValue] < previousAngle - 0.07)) && 
+            ((m_DriveSubsystem.getAngles()[angleValue] <  10))/*MathUtil.applyDeadband(m_DriveSubsystem.getAngles()[1], 3) == 0*/) {
                 //stopped
                     m_DriveSubsystem.drive(0, 0, 0, true);
                     m_DriveSubsystem.setX();

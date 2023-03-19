@@ -21,7 +21,7 @@ import frc.robot.commands.HandleArmWithPIDAndMotionProfile;
 
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ConeFlipper;
-
+import frc.robot.commands.AutoDriveOutAndChargeCenter;
 import frc.robot.commands.AutoDriveOutAndChargeLeft;
 import frc.robot.commands.AutoDriveOutAndChargeRight;
 import frc.robot.commands.AutoDriveOutOfCommunity;
@@ -81,8 +81,8 @@ private BoolSupplierDriveUntilAngle boolSupplier = new BoolSupplierDriveUntilAng
     autoChooser.setDefaultOption("None", null);
     autoChooser.addOption("Auto Drive Out Of Community", new AutoDriveOutOfCommunity(m_robotDrive));
     autoChooser.addOption("Auto Two Cubes", new AutoPickForTwoCubes(m_robotDrive,m_ArmWithPID,m_GrabberWithPID));
-    autoChooser.addOption("Auto Engage on Charging Station Center", new AutoEngageOnChargingStation(m_robotDrive));
-    autoChooser.addOption("Auto Charge on Charging Station Left", new AutoDriveOutAndChargeLeft(m_robotDrive));
+    autoChooser.addOption("Auto Engage on Charging Station Center", new AutoDriveOutAndChargeCenter(m_robotDrive, boolSupplier));
+    autoChooser.addOption("Auto Charge on Charging Station Left", new AutoDriveOutAndChargeLeft(m_robotDrive, boolSupplier));
     autoChooser.addOption("Auto Charge on Charging Station Right ", new AutoDriveOutAndChargeRight(m_robotDrive));
     autoChooser.addOption("Auto Run Until Angle", new AutoDriveUntilAngle(m_robotDrive, boolSupplier));
     SmartDashboard.putData("Autonomous", autoChooser);
