@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.lang.reflect.Array;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -15,6 +17,9 @@ import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.simulation.ADIS16448_IMUSim;
 import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.ADIS16448_IMU.IMUAxis;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -301,4 +306,37 @@ public class DriveSubsystem extends SubsystemBase {
   public double getTurnRate() {
     return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
+
+  /* */
+  public double[] getAngles() {
+    //double x_angle;
+    //double y_angle;
+    //double z_angle;
+  
+    
+    //x_angle = m_gyro.getGyroAngleX();
+    
+    //y_angle = m_gyro.getGyroAngleY();
+    
+    
+    //z_angle = m_gyro.getGyroAngleZ();
+    
+    double[] angles = {m_gyro.getGyroAngleX(), m_gyro.getGyroAngleY(), m_gyro.getGyroAngleZ()};
+    
+    return angles;
+  }
+
+  public void ResetGyro() {
+    m_gyro.reset();
+  }
+
+  public double[] getEncoderPositions() {
+      return new double[] {
+        Units.metersToInches(m_frontLeft.getPosition().distanceMeters),
+        Units.metersToInches(m_frontRight.getPosition().distanceMeters),
+        Units.metersToInches(m_rearLeft.getPosition().distanceMeters),
+        Units.metersToInches(m_rearRight.getPosition().distanceMeters)
+      };
+  }
 }
+ 

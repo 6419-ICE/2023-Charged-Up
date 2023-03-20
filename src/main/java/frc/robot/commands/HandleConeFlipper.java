@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ConeFlipper;
 
 public class HandleConeFlipper extends CommandBase{
@@ -19,10 +20,12 @@ public class HandleConeFlipper extends CommandBase{
     boolean up = false;
     boolean pos = true;
     DigitalInput testHall = new DigitalInput(8);
+    
     private final ConeFlipper m_ConeFlipper;
     // Constructor, used to pass in The ConeFlipper object to be used
     public HandleConeFlipper(ConeFlipper coneFlipper) {
         m_ConeFlipper = coneFlipper;
+        
         //Makes the ConeFlipper object required by the command
         addRequirements(m_ConeFlipper);
     }
@@ -43,20 +46,16 @@ public class HandleConeFlipper extends CommandBase{
         } else {
             pos = true;
         }
-       // System.out.println(testHall.get() + " POS: " + pos);
         if (RobotContainer.GetConeFlipperUpButton()) {
-            up = true; //coneFlipper.MoveUp();
-           // System.out.print( new BigDecimal(RobotContainer.GetFlipperPos()).setScale(3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString() + "-");
-           
-            testingVar = true;
-           // ConeFlipper.set(ControlMode.PercentOutput, -0.5);
-      } 
+            up = true;
+        }
       //checks for button press
      else if (RobotContainer.GetConeFlipperDownButton()) {
         //System.out.print(  "-" + new BigDecimal(RobotContainer.GetFlipperPos()).setScale(3, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString() );
         down = true;//coneFlipper.MoveDown();
         testingVar = true;
      }
+     
         //ConeFlipper.set(VictorSPXControlMode.PercentOutput, 0.5);   
     //   } else {
     //     if (testingVar) {
@@ -92,7 +91,7 @@ public class HandleConeFlipper extends CommandBase{
         //     System.out.print(RobotContainer.GetFlipperEncoder().getDistance());
             
         // }
-        coneFlipper.MoveUp();
+        coneFlipper.MoveUp(0.5);
     }
       } else if (down) {
     //     if (pos = false) {
@@ -112,7 +111,7 @@ public class HandleConeFlipper extends CommandBase{
             System.out.println(RobotContainer.GetFlipperEncoder().getDistance());
         } else {
             System.out.println(RobotContainer.GetFlipperEncoder().getDistance() + "- It Stopped :)");
-            coneFlipper.MoveDown();
+            coneFlipper.MoveDown(0.5);
             
         }
     
@@ -120,7 +119,7 @@ public class HandleConeFlipper extends CommandBase{
         coneFlipper.StopMotor();
     }
       if (RobotContainer.GetConeFlipperDownButton() && RobotContainer.GetConeFlipperUpButton()) {
-        coneFlipper.MoveUp();
+        coneFlipper.MoveUp(0.5);
       }
     
         // TODO Auto-generated method stub 
@@ -129,9 +128,15 @@ public class HandleConeFlipper extends CommandBase{
 
     @Override
     public void initialize() {
+        boolean Homing = false;
+       if (Homing) {
+       while(!testHall.get()) {
+            coneFlipper.MoveUp(0.25);
+       }
+       RobotContainer.GetFlipperEncoder().reset();
+    }
+       coneFlipper.StopMotor();
        
-       
-        RobotContainer.GetFlipperEncoder().reset();
         testingVar = false;
         // TODO Auto-generated method stub
         super.initialize();
