@@ -24,14 +24,14 @@ public class BalanceOnChargeStation extends ProfiledPIDCommand {
             ModuleConstants.kTurningI,
             ModuleConstants.kTurningD,
             new TrapezoidProfile.Constraints(
-                0.1,
-                0.1)), //Reminder, make sure to change this variable/make a new one if the program works. 
+                10,
+                30)), //Reminder, make sure to change this variable/make a new one if the program works. 
         // Close loop on heading
         drive::getHeadingForBalancing,
         // Set reference to target
         0,
         // Pipe output to turn robot
-        (output, setpoint) -> drive.balance(output,0,0, true),
+        (output, setpoint) -> drive.balance(output,0,0, false),
         // Require the drive
         drive);
         this.drive = drive; 
@@ -42,7 +42,7 @@ public class BalanceOnChargeStation extends ProfiledPIDCommand {
     // setpoint before it is considered as having reached the reference
     getController()
         //.setTolerance(ModuleConstants.kTurnToleranceDeg, DriveConstants.kTurnRateToleranceDegPerS);
-        .setTolerance(1, 1);
+        .setTolerance(1, 5);
   }
 
   @Override
@@ -50,7 +50,7 @@ public class BalanceOnChargeStation extends ProfiledPIDCommand {
     // End when the controller is at the reference.
    // End when the controller is at the reference
    boolean finished = false; 
-   if(Math.abs(drive.getHeadingForBalancing()-getController().getGoal().position) < getController().getPositionTolerance())
+   if(Math.abs(drive.getHeadingForBalancing()) < getController().getPositionTolerance())
    {
      finished = true;
 
