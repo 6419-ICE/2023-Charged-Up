@@ -58,13 +58,14 @@ public class TrajectoryPaths {
     // These sets of trajectories are being used to Create the Two Cube Autonomus Program
 
     public static Trajectory trajectoryAutoForwardToPutArmDown () {
+        config.setReversed(false);
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(1,0)),
+            List.of(new Translation2d(0,0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(Units.inchesToMeters(24), 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(Units.inchesToMeters(48), 0, Rotation2d.fromDegrees(0)),
             config);
     
             return trajectory; 
@@ -96,18 +97,76 @@ public class TrajectoryPaths {
             // return trajectory;
         }
 
+
+        public static Trajectory trajectoryAutoForwardTowardsDropoff () {
+            config.setReversed(true);
+            Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(Units.inchesToMeters(0), 0, Rotation2d.fromDegrees(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(Units.inchesToMeters(0),0)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(Units.inchesToMeters(48), 0, Rotation2d.fromDegrees(0)),
+                config);
+        
+                return trajectory; 
+            }
+
+            public static Trajectory TestGoingForward () {
+                config.setReversed(false);
+                Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                    // Start at the origin facing the +X direction
+                    new Pose2d(Units.inchesToMeters(0), 0, Rotation2d.fromDegrees(0)),
+                    // Pass through these two interior waypoints, making an 's' curve path
+                    List.of(new Translation2d(Units.inchesToMeters(0),0)),
+                    // End 3 meters straight ahead of where we started, facing forward
+                    new Pose2d(Units.inchesToMeters(48), 0, Rotation2d.fromDegrees(0)),
+                    config);
+            
+                    return trajectory; 
+                }
+        
+                public static Trajectory TestComingBack () {
+                    config.setReversed(true);
+                    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                        // Start at the origin facing the +X direction
+                        new Pose2d(Units.inchesToMeters(0), 0, Rotation2d.fromDegrees(180)),
+                        // Pass through these two interior waypoints, making an 's' curve path
+                        List.of(new Translation2d(Units.inchesToMeters(0),0)),
+                        // End 3 meters straight ahead of where we started, facing forward
+                        new Pose2d(Units.inchesToMeters(48), 0, Rotation2d.fromDegrees(180)),
+                        config);
+                        
+                        return trajectory; 
+                    }
+
     public static Trajectory trajectoryAutoForwardTowardsSecondBlock () {
+        config.setReversed(true);
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
-            new Pose2d(Units.inchesToMeters(0), 0, Rotation2d.fromDegrees(0)),
+            new Pose2d(Units.inchesToMeters(0), 0, Rotation2d.fromDegrees(180)),
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(Units.inchesToMeters(90),0)),
+            List.of(new Translation2d(Units.inchesToMeters(0),0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(Units.inchesToMeters(180), 0, Rotation2d.fromDegrees(179.9)),
+            new Pose2d(Units.inchesToMeters(156), 0, Rotation2d.fromDegrees(180)),
             config);
     
             return trajectory; 
         }
+
+        public static Trajectory trajectoryAutoForwardBackFromSecondBlock () {
+            config.setReversed(false);
+            Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(Units.inchesToMeters(0), 0, Rotation2d.fromDegrees(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(Units.inchesToMeters(0),0)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(Units.inchesToMeters(180), 0, Rotation2d.fromDegrees(0)),
+                config);
+                
+                return trajectory; 
+            }
     
 
     public static Trajectory trajectoryAutoBackTowardsDropOffOfSecondBlock () {
