@@ -33,7 +33,7 @@ public final class Constants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
     public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(13);
-    public static final double kMaxAngularSpeed = Math.PI; // radians per second //2*math.pi
+    public static final double kMaxAngularSpeed = 2*Math.PI; // radians per second //2*math.pi
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(20.5); //20.75 old
@@ -181,7 +181,7 @@ public final class Constants {
     public static final double kArmOffsetRads = 0.5;
     //saftey Offsets.
     public static final double kArmMinOffsetRads = Math.toRadians(0);
-    public static final double kArmMaxOffsetRads = Math.toRadians(90);
+    public static final double kArmMaxOffsetRads = Math.toRadians(110);
     
 
   }

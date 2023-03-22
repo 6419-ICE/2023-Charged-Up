@@ -26,24 +26,47 @@ public class AutoPickForTwoCubes extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       Commands.sequence(
-        new GrabberWithPIDProfiledCommand(m_grabber, 0).withTimeout(1),
+       // new GrabberWithPIDProfiledCommand(m_grabber, 0).withTimeout(1),
         Commands.parallel(
           new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(170)).withTimeout(5),
           Commands.sequence(
-            new WaitCommand(3),
-            new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(90)).withTimeout(2)
-          )
-        ),
-        Commands.parallel(
-          new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardToPutArmDown()),
-          Commands.sequence(
-            new WaitCommand(3),
-            new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(260)).withTimeout(4)
+            new WaitCommand(2),
+            new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(100)).withTimeout(1),
+            new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardToPutArmDown())
             )
         ),
-        new TurnToAngleProfiled(180, driveSubsystem),
-        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock()),
-        new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(0)).withTimeout(2)
+        Commands.parallel(
+            //new WaitCommand(1),
+            new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(260)).withTimeout(2),
+            new TurnToAngleProfiled(-179.999, driveSubsystem).withTimeout(3)
+        ),
+        Commands.parallel(
+          new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock()),
+          new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(100)).withTimeout(2)
+          ),
+        Commands.parallel(
+          new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(12)).withTimeout(8),
+          new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(250)).withTimeout(8),
+          Commands.sequence(
+          new WaitCommand(1),
+          new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardBackFromSecondBlock()),
+          new TurnToAngleProfiled(0, driveSubsystem).withTimeout(3)
+          )
+        ),
+       
+        new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(100)).withTimeout(1)
+        
+
+
+
+
+
+
+
+
+
+     //   new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock()),
+       // new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(0)).withTimeout(2)
         
         //new ArmToDropOffCommand(m_arm)
         //new WaitCommand(2),

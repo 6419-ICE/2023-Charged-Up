@@ -40,11 +40,43 @@ public class AutoDriveOutOfCommunity extends SequentialCommandGroup {
     */
       Commands.sequence(
         //new WaitCommand(.5),
-        //new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoDriveOutOfCommunity())
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.TestGoingForward()),
+        new WaitCommand(2),
+        new TurnToAngleProfiled(-179.999, driveSubsystem).withTimeout(3),
+        new WaitCommand(2),
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.TestComingBack()),
+        new WaitCommand(2),
+        new TurnToAngleProfiled(-179.999, driveSubsystem).withTimeout(3),
+        new WaitCommand(2),
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.TestGoingForward()),
+        new WaitCommand(2),
+        new TurnToAngleProfiled(-179.999, driveSubsystem).withTimeout(3),
+        new WaitCommand(2),
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.TestComingBack())
+
+/* 
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardToPutArmDown()),
+
+        new TurnToAngleProfiled(-179.999, driveSubsystem).withTimeout(3),
+      
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock()),
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardBackFromSecondBlock()),
+        new TurnToAngleProfiled(0, driveSubsystem).withTimeout(3)
+
+ */
+ 
+        /* 
+        new WaitCommand(5),
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardBackFromSecondBlock()),
+        new WaitCommand(5),
+        new TurnToAngleProfiled(180, driveSubsystem).withTimeout(3),
+        new WaitCommand(5),
+        new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock())
+      */  
         //new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardToPutArmDown()),
         //new WaitCommand(2),
         //new TurnToAngleProfiled(180,driveSubsystem)
-        new BalanceOnChargeStation(driveSubsystem)
+        
         )
     );
 
