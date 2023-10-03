@@ -18,43 +18,54 @@ import frc.robot.subsystems.GrabberWithPIDAndMotionProfile;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoPickForTwoCubes extends SequentialCommandGroup {
+public class AutoPickForTwoCubesBlueSideFast extends SequentialCommandGroup {
   /** Creates a new Autonomous Program. */
 
-  public AutoPickForTwoCubes(DriveSubsystem driveSubsystem, ArmWithPIDAndMotionProfile m_arm, GrabberWithPIDAndMotionProfile m_grabber) {
+  public AutoPickForTwoCubesBlueSideFast(DriveSubsystem driveSubsystem, ArmWithPIDAndMotionProfile m_arm, GrabberWithPIDAndMotionProfile m_grabber) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       Commands.sequence(
-       // new GrabberWithPIDProfiledCommand(m_grabber, 0).withTimeout(1),
         Commands.parallel(
           new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(170)).withTimeout(5),
           Commands.sequence(
             new WaitCommand(2),
             new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(100)).withTimeout(1),
-            new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardToPutArmDown())
+            Commands.parallel(
+              new TrajectoryCommand(driveSubsystem, TrajectoryPaths.GoForwardToTurnFast())
+      /*       Commands.sequence(
+              new WaitCommand(2),
+              new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(260)).withTimeout(1)
+              )
+              */
+        )
             )
         ),
         Commands.parallel(
-            //new WaitCommand(1),
-            new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(260)).withTimeout(2),
-            new TurnToAngleProfiled(-179.999, driveSubsystem).withTimeout(3)
-        ),
-        Commands.parallel(
-          new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardTowardsSecondBlock()),
-          new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(100)).withTimeout(2)
-          ),
-        Commands.parallel(
-          new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(12)).withTimeout(8),
-          new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(250)).withTimeout(8),
+          new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(100)).withTimeout(4),
           Commands.sequence(
-          new WaitCommand(1),
-          new TrajectoryCommand(driveSubsystem, TrajectoryPaths.trajectoryAutoForwardBackFromSecondBlock()),
-          new TurnToAngleProfiled(0, driveSubsystem).withTimeout(3)
+            new TurnToAngleProfiled(-10, driveSubsystem).withTimeout(0.5),
+            new TurnToAngleProfiled(-179.999, driveSubsystem).withTimeout(3),
+            new TrajectoryCommand(driveSubsystem, TrajectoryPaths.GoBackwardsTowardsBlockFast())
           )
         ),
-       
+        Commands.parallel(
+          new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(12)).withTimeout(8),
+          Commands.sequence(
+          new WaitCommand(0.8),
+          new ArmWithPIDProfiledCommand(m_arm, Math.toRadians(240)).withTimeout(8)
+          ),
+          Commands.sequence(
+            new WaitCommand(1),
+            new TrajectoryCommand(driveSubsystem, TrajectoryPaths.GoForwardToTurnOnWayBackFast()),
+            new TurnToAngleProfiled(-160, driveSubsystem).withTimeout(0.5),
+            new TurnToAngleProfiled(-0, driveSubsystem).withTimeout(3),
+            new TrajectoryCommand(driveSubsystem, TrajectoryPaths.GoBackwardsToDropBlockFast())
+          )
+        ),
         new GrabberWithPIDProfiledCommand(m_grabber, Math.toRadians(100)).withTimeout(1)
+
+       
         
 
 

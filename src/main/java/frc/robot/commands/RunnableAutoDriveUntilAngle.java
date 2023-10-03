@@ -55,6 +55,9 @@ public class RunnableAutoDriveUntilAngle implements Runnable {
                     //          m_DriveSubsystem.drive(-0.1, 0, 0, true);
                     // }
                      if (MathUtil.applyDeadband(m_DriveSubsystem.getAngles()[angleValue], 3) == 0 ) {boolSupplier.SetValue(true);}
+                     else if (m_DriveSubsystem.getAngles()[angleValue] > 0 ) {
+                        boolSupplier.SetValue(true);
+                     }
                     
                     System.out.println("Finished");
             } //Re-Add after this if statement ^ ?
