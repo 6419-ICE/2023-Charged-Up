@@ -39,6 +39,8 @@ public class HandleArmWithPIDAndMotionProfile extends CommandBase {
       //m_grabber.CloseFully();
       m_arm.Home();
     } */
+
+  
     if(RobotContainer.GetArmExtendButton())
     {
       m_arm.Top();

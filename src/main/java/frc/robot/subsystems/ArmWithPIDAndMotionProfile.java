@@ -96,6 +96,9 @@ public void Ground(){
   }
 
   @Override
+  public void getEncoderPos() {
+    return ArmMotor.getSensorCollection().getIntegratedSensorPosition();
+  }
   public double getMeasurement() {
     return -Math.toRadians(ArmMotor.getSensorCollection().getIntegratedSensorPosition() / Constants.ArmConstantsForPIDAndMotionProfile.ArmUnitsPerDegree); //+ ArmConstantsForPIDAndMotionProfile.kArmOffsetRads;
   /* 

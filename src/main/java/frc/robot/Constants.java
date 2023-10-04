@@ -192,8 +192,12 @@ public final class Constants {
     public static final double homePosition = 0; 
     public static final double dropPosition = 165; 
     public static final double groundPosition = 260; 
-    public static final double kP = 1.3;//1
-    public static final double kd = 0.11; 
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0; 
+
+    
+
 
     // These are fake gains; in actuality these must be determined individually for each robot
     public static final double kSVolts = 1;

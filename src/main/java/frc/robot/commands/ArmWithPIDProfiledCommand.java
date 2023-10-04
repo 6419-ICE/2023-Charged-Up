@@ -18,7 +18,6 @@ public class ArmWithPIDProfiledCommand extends ProfiledPIDCommand {
   //GrabberWithPIDAndMotionProfile m_grabber; 
   public ArmWithPIDProfiledCommand(ArmWithPIDAndMotionProfile m_arm, double goal) 
   {
-    
     //super(m_grabber.getController(), m_grabber.getMeasurement(), m_grabber.getController().getGoal(), (m_grabber.getController().calculate(m_grabber.getMeasurement()))
     super(m_arm.getController(), 
     m_arm :: getMeasurement, 

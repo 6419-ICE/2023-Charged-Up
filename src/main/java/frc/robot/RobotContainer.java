@@ -7,13 +7,14 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.Constants.GrabberConstantsForPIDAndMotionProfile;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HandleConeFlipper;
-import frc.robot.commands.HandleGrabber;
+import frc.robot.commands.handleGrabber;
 import frc.robot.commands.HandleGrabberWithPIDAndMotionProfile;
 import frc.robot.commands.MoveBothArmAndGrabberRetract;
 import frc.robot.commands.RunforwardUntilAngleCommand;
@@ -36,6 +37,7 @@ import frc.robot.subsystems.ArmWithPIDAndMotionProfile;
 import frc.robot.subsystems.BoolSupplierDriveUntilAngle;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
@@ -54,6 +56,7 @@ public class RobotContainer {
   //private final Grabber m_Grabber = new Grabber();
   private final GrabberWithPIDAndMotionProfile m_GrabberWithPID = new GrabberWithPIDAndMotionProfile(); 
   private final ArmWithPIDAndMotionProfile m_ArmWithPID = new ArmWithPIDAndMotionProfile(); 
+  private final Arm m_ArmForEncoderPos = new Arm(); 
 
   //private final Arm m_Arm = new Arm();
   // The driver's controller
@@ -87,39 +90,25 @@ private BoolSupplierDriveUntilAngle boolSupplier = new BoolSupplierDriveUntilAng
     autoChooser.addOption("Auto Charge on Charging Station Right ", new AutoDriveOutAndChargeRight(m_robotDrive));
     autoChooser.addOption("Auto Run Until Angle", new AutoDriveUntilAngle(m_robotDrive, boolSupplier));
     SmartDashboard.putData("Autonomous", autoChooser);
+    
+    
+    SmartDashboard.putNumber("kP", Constants.ArmConstantsForPIDAndMotionProfile.kP);
+    SmartDashboard.putNumber("kI", Constants.ArmConstantsForPIDAndMotionProfile.kI);
+    SmartDashboard.putNumber("kD", Constants.ArmConstantsForPIDAndMotionProfile.kD);
+    SmartDashboard.putNumber("Arm Encoder Position", m_ArmForEncoderPos.GetEncoderPos());
+
+
+    
+
     //Shuffleboard.getTab("Gryo tab").add(m_robotDrive.m_gyro);
 
     configureButtonBindings();
     JoystickButton ArmRetractButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ArmRetract);
-    ArmRetractButton.whileTrue(new MoveBothArmAndGrabberRetract(m_ArmWithPID, m_GrabberWithPID));
-    m_ConeFlipper.setDefaultCommand(handleConeFlipper);
-   // m_Grabber.setDefaultCommand(handleGrabber);
-    //m_Arm.setDefaultCommand(handleArm);
-    m_GrabberWithPID.setDefaultCommand(handleGrabberWithPID);
-    m_ArmWithPID.setDefaultCommand(handleArmWithPID);
 
-    // Configure default commands
-    m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-            () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.06),
-                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.06),
-                MathUtil.applyDeadband(-m_driverController.getRightX(), 0.06),
-                true),
-            m_robotDrive));
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by
-   * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its
-   * subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling
-   * passing it to a
-   * {@link JoystickButton}.
-   */
+
+
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, Button.kR1.value)
         .whileTrue(new RunCommand(
@@ -152,7 +141,7 @@ private BoolSupplierDriveUntilAngle boolSupplier = new BoolSupplierDriveUntilAng
  }
  public static DutyCycleEncoder GetFlipperEncoder() {
   return coneFlipperEncoder;
-}
+ }
 public static boolean GetGrabberCloseCubeButton() {
   return mechanismJoystick.getRawButton(Constants.GamePadConstants.GrabberCloseCube);
  } 
