@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
@@ -16,7 +18,6 @@ public class Arm extends SubsystemBase {
     private final double MinValue = -0.1;
     private TalonFX ArmMotor = new TalonFX(Constants.DriveConstants.ArmID);
     public Arm() {
-       
         
     }
     public void MoveUp() {

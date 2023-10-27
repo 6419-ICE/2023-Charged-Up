@@ -15,8 +15,10 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.HandleConeFlipper;
 import frc.robot.commands.HandleGrabber;
 import frc.robot.commands.HandleGrabberWithPIDAndMotionProfile;
+import frc.robot.commands.Intake;
 import frc.robot.commands.MoveBothArmAndGrabberRetract;
 import frc.robot.commands.RunforwardUntilAngleCommand;
+import frc.robot.commands.Intake.state;
 import frc.robot.commands.HandleArmWithPIDAndMotionProfile;
 
 import frc.robot.subsystems.Arm;
@@ -28,6 +30,7 @@ import frc.robot.commands.AutoDriveOutOfCommunity;
 import frc.robot.commands.AutoDriveOutOfCommunityWithWIres;
 import frc.robot.commands.AutoDriveUntilAngle;
 import frc.robot.commands.AutoDropPreAndParkOnStation;
+import frc.robot.commands.AutoDropPreAndParkOnStationActiveIntake;
 import frc.robot.commands.AutoEngageOnChargingStation;
 //import frc.robot.commands.AutoPickForTwoCubes;
 import frc.robot.commands.AutoPickForTwoCubesBlueSide;
@@ -39,6 +42,7 @@ import frc.robot.commands.HandleArm;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.GrabberWithPIDAndMotionProfile;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmWithPIDAndMotionProfile;
 import frc.robot.subsystems.BoolSupplierDriveUntilAngle;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -61,7 +65,7 @@ public class RobotContainer {
   //private final Grabber m_Grabber = new Grabber();
   private final GrabberWithPIDAndMotionProfile m_GrabberWithPID = new GrabberWithPIDAndMotionProfile(); 
   private final ArmWithPIDAndMotionProfile m_ArmWithPID = new ArmWithPIDAndMotionProfile(); 
-
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   //private final Arm m_Arm = new Arm();
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -75,7 +79,7 @@ public class RobotContainer {
   private HandleGrabberWithPIDAndMotionProfile handleGrabberWithPID = new HandleGrabberWithPIDAndMotionProfile(m_GrabberWithPID);
   private HandleArmWithPIDAndMotionProfile handleArmWithPID = new HandleArmWithPIDAndMotionProfile(m_ArmWithPID);
   private MoveBothArmAndGrabberRetract moveBothArmAndGrabber = new MoveBothArmAndGrabberRetract(m_ArmWithPID, m_GrabberWithPID);
-
+  private Intake intakePullCommand = new Intake(intakeSubsystem);
 private BoolSupplierDriveUntilAngle boolSupplier = new BoolSupplierDriveUntilAngle();
   //private HandleArm handleArm = new HandleArm(m_Arm);
   private static DutyCycleEncoder coneFlipperEncoder = new DutyCycleEncoder(Constants.FlipperEncoderID);
@@ -94,7 +98,8 @@ private BoolSupplierDriveUntilAngle boolSupplier = new BoolSupplierDriveUntilAng
     autoChooser.addOption("Auto Two Cubes Red Fast", new AutoPickForTwoCubesRedSideFast(m_robotDrive,m_ArmWithPID,m_GrabberWithPID));
     autoChooser.addOption("Auto Two Cubes Blue Fast", new AutoPickForTwoCubesBlueSideFast(m_robotDrive,m_ArmWithPID,m_GrabberWithPID));
     autoChooser.addOption("Auto Two Cubes Blue", new AutoPickForTwoCubesBlueSide(m_robotDrive,m_ArmWithPID,m_GrabberWithPID));
-    autoChooser.addOption("Auto Drive Out Of Communiy and Park On Charge", new AutoDropPreAndParkOnStation(m_robotDrive,m_ArmWithPID,m_GrabberWithPID));
+    //autoChooser.addOption("Auto Drive Out Of Communiy and Park On Charge", new AutoDropPreAndParkOnStation(m_robotDrive,m_ArmWithPID,m_GrabberWithPID));
+    autoChooser.addOption("Auto Drive Out Of Communiy and Park On Charge (Active Intake)", new AutoDropPreAndParkOnStationActiveIntake(m_robotDrive,m_ArmWithPID,intakeSubsystem));
    // autoChooser.addOption("Auto Engage on Charging Station Center", new AutoEngageOnChargingStation(m_robotDrive));
     //autoChooser.addOption("Auto Charge on Charging Station Left", new AutoDriveOutAndChargeLeft(m_robotDrive));
     //autoChooser.addOption("Auto Charge on Charging Station Right ", new AutoDriveOutAndChargeRight(m_robotDrive));
@@ -104,12 +109,14 @@ private BoolSupplierDriveUntilAngle boolSupplier = new BoolSupplierDriveUntilAng
 
     configureButtonBindings();
     JoystickButton ArmRetractButton = new JoystickButton(mechanismJoystick, Constants.GamePadConstants.ArmRetract);
+    
     ArmRetractButton.whileTrue(new MoveBothArmAndGrabberRetract(m_ArmWithPID, m_GrabberWithPID));
-    m_ConeFlipper.setDefaultCommand(handleConeFlipper);
+    //m_ConeFlipper.setDefaultCommand(handleConeFlipper);
    // m_Grabber.setDefaultCommand(handleGrabber);
     //m_Arm.setDefaultCommand(handleArm);
     m_GrabberWithPID.setDefaultCommand(handleGrabberWithPID);
     m_ArmWithPID.setDefaultCommand(handleArmWithPID);
+    intakeSubsystem.setDefaultCommand(intakePullCommand);
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
