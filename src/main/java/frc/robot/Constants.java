@@ -192,7 +192,7 @@ public final class Constants {
     public static final int kMotorPort = 11;
     public static final double homePosition = 0; 
     public static final double dropPosition = 180; 
-    public static final double groundPosition = 250; //260 
+    public static final double groundPosition = 270; //250 old, 270 current(269) 
     public static final double kP = 1.3;//1
     public static final double kd = 0.11; 
 
