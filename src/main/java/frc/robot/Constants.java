@@ -125,8 +125,9 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+
+    public static final double kMaxSpeedMetersPerSecond = 0.3; //3
+    public static final double kMaxAccelerationMetersPerSecondSquared = 0.3; //3
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
@@ -190,8 +191,8 @@ public final class Constants {
   public static class ArmConstantsForPIDAndMotionProfile{
     public static final int kMotorPort = 11;
     public static final double homePosition = 0; 
-    public static final double dropPosition = 165; 
-    public static final double groundPosition = 260; 
+    public static final double dropPosition = 180; 
+    public static final double groundPosition = 270; //250 old, 270 current(269) 
     public static final double kP = 1.3;//1
     public static final double kd = 0.11; 
 
@@ -219,5 +220,7 @@ public final class Constants {
     
 
   }
-
+  public static class IntakeConstants {
+    public static final double stopVal = 500;
+  }
 }
